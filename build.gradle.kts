@@ -6,7 +6,6 @@ plugins {
     application
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.1"
-    id("com.ncorti.ktfmt.gradle") version "0.12.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.0"
 }
 
@@ -35,10 +34,6 @@ application {
 
 ktlint {
     version.set("0.45.1")
-}
-
-ktfmt {
-    kotlinLangStyle()
 }
 
 detekt {
