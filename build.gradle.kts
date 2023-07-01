@@ -1,35 +1,47 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("jvm") version "1.8.21"
-    application
+    kotlin("multiplatform")
+    id("org.jetbrains.compose")
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.1"
-    id("io.gitlab.arturbosch.detekt") version "1.23.0"
+    id("io.gitlab.arturbosch.detekt") version("1.23.0")
 }
 
-group = "org.example"
+group = "com.example"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    google()
     mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
-dependencies {
-    testImplementation(kotlin("test"))
+kotlin {
+    jvm {
+        jvmToolchain(11)
+        withJava()
+    }
+    sourceSets {
+        val jvmMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+        }
+        val jvmTest by getting
+    }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-application {
-    mainClass.set("MainKt")
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "demo"
+            packageVersion = "1.0.0"
+        }
+    }
 }
 
 ktlint {
