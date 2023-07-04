@@ -10,4 +10,6 @@ interface Graph <T>{
 	)
 	fun edges(source: Vertex<T>): MutableList<Edge<T>>
 	fun weight(source: Vertex<T>, destination: Vertex<T>): Double?
+
+	fun vertex(name: T): Vertex<T>?
 }

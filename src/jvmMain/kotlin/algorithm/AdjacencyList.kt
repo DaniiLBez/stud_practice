@@ -8,6 +8,15 @@ class AdjacencyList<T>: Graph<T> {
 		startVertex = vertex
 	}
 
+	override fun vertex(name: T): Vertex<T>? {
+		for(vertex in this.adjacencies.keys){
+			if(vertex.name == name){
+				return vertex
+			}
+		}
+		return null
+	}
+
 	override fun createVertex(data: T): Vertex<T> {
 		val vertex = Vertex(adjacencies.count(), data)
 		adjacencies[vertex] = mutableListOf()
@@ -31,9 +40,9 @@ class AdjacencyList<T>: Graph<T> {
 		return buildString { // 1
 			adjacencies.forEach { (vertex, edges) -> // 2
 				val edgeString = edges.joinToString{
-					it.destination.data.toString()
+					it.destination.name.toString()
 				} // 3
-				append("${vertex.data} ---> [ $edgeString ]\n") // 4
+				append("${vertex.name} ---> [ $edgeString ]\n") // 4
 			}
 		}
 	}

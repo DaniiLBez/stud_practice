@@ -9,18 +9,17 @@ class GraphCreator(_data: IDataSource) {
 		graph.setStart(startVertex)
 
 		for(nameVertex in data.getRawData().keys){
-			val currentVertex = graph.createVertex(nameVertex)
+			val currentVertex = graph.vertex(nameVertex) ?: graph.createVertex(nameVertex)
 			data.getRawData()[nameVertex]?.forEach {
+				val destinationVertex = graph.vertex(it.first) ?: graph.createVertex(it.first)
 				graph.add(
 					currentVertex,
-					graph.createVertex(it.first),
+					destinationVertex,
 					it.second
 				)
 			}
 		}
 
-		println(graph)
 	}
-
-
+	fun getGraph() = this.graph
 }

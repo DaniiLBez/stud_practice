@@ -5,7 +5,7 @@ import java.io.*
 class FileReader(_fileName: String): IDataSource() {
 	protected var fileName: String = _fileName
 
-	fun readData(): Unit{
+	fun readData(){
 		val file = File(fileName)
 
 		if (file.exists()){
