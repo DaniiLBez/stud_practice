@@ -2,12 +2,12 @@ package algorithm
 
 class AdjacencyList<T>: Graph<T> {
 	private val adjacencies: HashMap<Vertex<T>, MutableList<Edge<T>>> = HashMap()
-	private var startVertex: Vertex<T>? = null
+	private var startVertex: T? = null
 
-	override fun setStart(vertex: Vertex<T>) {
-		startVertex = vertex
+	override fun getStartVertex() = startVertex
+	override fun setStart(name: T) {
+		startVertex = name
 	}
-
 	override fun vertex(name: T): Vertex<T>? {
 		for(vertex in this.adjacencies.keys){
 			if(vertex.name == name){

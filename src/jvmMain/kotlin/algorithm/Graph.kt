@@ -1,7 +1,8 @@
 package algorithm
 
 interface Graph <T>{
-	fun setStart(vertex: Vertex<T>)
+	fun setStart(name: T)
+	fun getStartVertex(): T?
 	fun createVertex(data: T): Vertex<T>
 	fun add(
 		source: Vertex<T>,

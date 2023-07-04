@@ -5,7 +5,7 @@ class GraphCreator(_data: IDataSource) {
 	private var graph: Graph<String> = AdjacencyList()
 
 	fun create(){
-		val startVertex = graph.createVertex(data.getGraphStartVertex())
+		val startVertex = data.getGraphStartVertex()
 		graph.setStart(startVertex)
 
 		for(nameVertex in data.getRawData().keys){
