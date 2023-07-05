@@ -2,13 +2,13 @@ package algorithm
 
 import java.io.*
 
-class FileReader(_fileName: String): IDataSource() {
+class FileReader(_fileName: String) : IDataSource() {
 	protected var fileName: String = _fileName
 
-	fun readData(){
+	fun readData() {
 		val file = File(fileName)
 
-		if (file.exists()){
+		if (file.exists()) {
 			val lines = file.readLines()
 			startVertex = lines[0]
 
@@ -20,15 +20,13 @@ class FileReader(_fileName: String): IDataSource() {
 					rawGraphData[fromVertex] = mutableListOf(Pair(inVertex, weight.toDouble()))
 				}
 			}
-
-		}
-		else println("Не удалось открыть файл")
+		} else println("Не удалось открыть файл")
 	}
 
-//	override fun getRawData(): MutableMap<String, MutableList<Pair<String, Double>>>{
-//		return rawData
-//	}
-//	override fun getStartVertex(): String {
-//		return startVertex
-//	}
+// 	override fun getRawData(): MutableMap<String, MutableList<Pair<String, Double>>>{
+// 		return rawData
+// 	}
+// 	override fun getStartVertex(): String {
+// 		return startVertex
+// 	}
 }

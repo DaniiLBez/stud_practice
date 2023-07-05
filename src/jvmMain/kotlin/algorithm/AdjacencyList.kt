@@ -1,6 +1,6 @@
 package algorithm
 
-class AdjacencyList: Graph {
+class AdjacencyList : Graph {
 	private val adjacencies: HashMap<Vertex, MutableList<Edge>> = HashMap()
 	private var startVertex: String? = null
 
@@ -9,8 +9,8 @@ class AdjacencyList: Graph {
 		startVertex = name
 	}
 	override fun vertex(name: String): Vertex? {
-		for(vertex in this.adjacencies.keys){
-			if(vertex.name == name){
+		for (vertex in this.adjacencies.keys) {
+			if (vertex.name == name) {
 				return vertex
 			}
 		}
@@ -32,14 +32,14 @@ class AdjacencyList: Graph {
 		adjacencies[source] ?: mutableListOf()
 
 	override fun weight(source: Vertex, destination: Vertex) =
-		edges(source).firstOrNull{
+		edges(source).firstOrNull {
 			it.destination == destination
 		}?.weight
 
 	override fun toString(): String {
 		return buildString { // 1
 			adjacencies.forEach { (vertex, edges) -> // 2
-				val edgeString = edges.joinToString{
+				val edgeString = edges.joinToString {
 					it.destination.name.toString()
 				} // 3
 				append("${vertex.name} ---> [ $edgeString ]\n") // 4

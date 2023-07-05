@@ -1,3 +1,3 @@
 package algorithm
 
-data class Vertex (val index: Int, val name: String)
+data class Vertex(val index: Int, val name: String)

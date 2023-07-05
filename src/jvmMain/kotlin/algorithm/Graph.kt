@@ -1,6 +1,6 @@
 package algorithm
 
-interface Graph{
+interface Graph {
 	fun setStart(name: String)
 	fun getStartVertex(): String?
 	fun createVertex(data: String): Vertex
