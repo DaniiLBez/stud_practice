@@ -1,39 +1,20 @@
-import androidx.compose.animation.Animatable
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.keyframes
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import androidx.compose.material.*
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.PlayArrow
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.WindowPosition
-import kotlinx.coroutines.coroutineScope
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.selects.select
 import java.awt.FileDialog
-import java.io.File
 
 
 @Composable
