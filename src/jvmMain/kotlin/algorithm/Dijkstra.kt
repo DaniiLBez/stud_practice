@@ -78,6 +78,20 @@ class Dijkstra(private val graph: Graph) {
 		resultPath = route(destination, distanceFromSource!!)
 	}
 	fun getPath() = resultPath
+
+	override fun toString(): String{
+		return buildString {
+			append("Start Vertex: ${graph.getStartVertex()}")
+			append("Graph: ${graph}")
+			var sumWeight = 0.0
+			resultPath?.forEach {
+				sumWeight += it.weight ?: 0.0
+				append("${it.source.name} --|${it.weight ?: 0.0}|--> ${it.destination.name} +\n")
+			}
+			append("Weight of the path: $sumWeight\n")
+		}
+	}
+
 }
 
 class Visit(val type: VisitType, val edge: Edge? = null)
