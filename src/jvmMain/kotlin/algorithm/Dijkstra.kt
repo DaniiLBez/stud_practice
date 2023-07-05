@@ -6,10 +6,10 @@ import kotlin.math.abs
 @Suppress("DEPRECATION")
 class Dijkstra(private val graph: Graph) {
 	private fun route(
-		destination: Vertex,
+		destination: String,
 		paths: HashMap<Vertex, Visit>
 	): MutableList<Edge>{
-		var vertex = destination
+		var vertex = graph.vertex(destination)
 		val path = mutableListOf<Edge>()
 		loop@while(true){
 			val visit = paths[vertex] ?: break
@@ -26,19 +26,20 @@ class Dijkstra(private val graph: Graph) {
 	}
 
 	private fun distance(
-		destination: Vertex,
+		destination: String,
 		paths: HashMap<Vertex, Visit>
 	): Double{
 		val path = route(destination, paths)
 		return path.sumByDouble{ it.weight ?: 0.0 }
 	}
 
-	fun shortestPath(start: Vertex): HashMap<Vertex, Visit>{
+	private fun shortestPath(startVertex: String): HashMap<Vertex, Visit>{
+		val start = graph.vertex(startVertex) ?: return HashMap()
 		val paths = hashMapOf<Vertex, Visit>()
 		paths[start] = Visit(VisitType.START)
 
 		val priorityQueue = PriorityQueue<Vertex> { first, second ->
-			abs(distance(second, paths) - distance(first, paths)).toInt()
+			abs(distance(second.name, paths) - distance(first.name, paths)).toInt()
 		}
 
 		priorityQueue.add(start)
@@ -51,7 +52,7 @@ class Dijkstra(private val graph: Graph) {
 				val weight = it.weight ?: return@forEach
 
 				if (paths[it.destination] == null ||
-					distance(vertex, paths) + weight < distance(it.destination, paths)){
+					distance(vertex.name, paths) + weight < distance(it.destination.name, paths)){
 					paths[it.destination] = Visit(VisitType.EDGE, it)
 					priorityQueue.add(it.destination)
 				}
@@ -61,9 +62,10 @@ class Dijkstra(private val graph: Graph) {
 	}
 
 	fun shortestPath(
-		destination: Vertex,
-		paths: HashMap<Vertex, Visit>
+		source: String,
+		destination: String
 	): MutableList<Edge>{
+		val paths = shortestPath(source)
 		return route(destination, paths)
 	}
 
