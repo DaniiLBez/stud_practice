@@ -35,7 +35,7 @@ class Dijkstra(private val graph: Graph) {
 		return path.sumByDouble { it.weight ?: 0.0 }
 	}
 
-	private fun shortestPath(startVertex: String) {
+	fun shortestPath(startVertex: String) {
 		val start = graph.vertex(startVertex)
 
 		if (start == null) {
@@ -78,6 +78,7 @@ class Dijkstra(private val graph: Graph) {
 		resultPath = route(destination, distanceFromSource!!)
 	}
 	fun getPath() = resultPath
+	fun getDistanceFromSourse() = distanceFromSource
 
 	override fun toString(): String {
 		return buildString {
