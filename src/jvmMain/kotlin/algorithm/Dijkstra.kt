@@ -82,16 +82,19 @@ class Dijkstra(private val graph: Graph) {
 
 	override fun toString(): String {
 		return buildString {
-			append("Start Vertex: ${graph.getStartVertex()}")
-			append("Graph: $graph")
+			append("Start Vertex: ${graph.getStartVertex()}\n\n")
+			append("Graph: $graph\n\n")
 			distanceFromSource!!.keys.forEach {
+
+				if (it.name == graph.getStartVertex()) return@forEach
+
 				shortestPath(graph.getStartVertex()!!, it.name)
 				var sumWeight = 0.0
 				resultPath?.forEach { edge ->
 					sumWeight += edge.weight ?: 0.0
 					append("${edge.source.name} --|${edge.weight ?: 0.0}|--> ${edge.destination.name} +\n")
 				}
-				append("Weight of the path: $sumWeight\n")
+				append("Weight of the path: $sumWeight\n\n")
 			}
 		}
 	}
