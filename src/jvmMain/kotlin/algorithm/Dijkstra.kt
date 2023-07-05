@@ -4,13 +4,13 @@ import java.util.PriorityQueue
 import kotlin.math.abs
 
 @Suppress("DEPRECATION")
-class Dijkstra<T>(private val graph: Graph<T>) {
+class Dijkstra(private val graph: Graph) {
 	private fun route(
-		destination: Vertex<T>,
-		paths: HashMap<Vertex<T>, Visit<T>>
-	): MutableList<Edge<T>>{
+		destination: Vertex,
+		paths: HashMap<Vertex, Visit>
+	): MutableList<Edge>{
 		var vertex = destination
-		val path = mutableListOf<Edge<T>>()
+		val path = mutableListOf<Edge>()
 		loop@while(true){
 			val visit = paths[vertex] ?: break
 
@@ -26,18 +26,18 @@ class Dijkstra<T>(private val graph: Graph<T>) {
 	}
 
 	private fun distance(
-		destination: Vertex<T>,
-		paths: HashMap<Vertex<T>, Visit<T>>
+		destination: Vertex,
+		paths: HashMap<Vertex, Visit>
 	): Double{
 		val path = route(destination, paths)
 		return path.sumByDouble{ it.weight ?: 0.0 }
 	}
 
-	fun shortestPath(start: Vertex<T>): HashMap<Vertex<T>, Visit<T>>{
-		val paths = hashMapOf<Vertex<T>, Visit<T>>()
+	fun shortestPath(start: Vertex): HashMap<Vertex, Visit>{
+		val paths = hashMapOf<Vertex, Visit>()
 		paths[start] = Visit(VisitType.START)
 
-		val priorityQueue = PriorityQueue<Vertex<T>> { first, second ->
+		val priorityQueue = PriorityQueue<Vertex> { first, second ->
 			abs(distance(second, paths) - distance(first, paths)).toInt()
 		}
 
@@ -61,15 +61,15 @@ class Dijkstra<T>(private val graph: Graph<T>) {
 	}
 
 	fun shortestPath(
-		destination: Vertex<T>,
-		paths: HashMap<Vertex<T>, Visit<T>>
-	): MutableList<Edge<T>>{
+		destination: Vertex,
+		paths: HashMap<Vertex, Visit>
+	): MutableList<Edge>{
 		return route(destination, paths)
 	}
 
 }
 
-class Visit<T>(val type: VisitType, val edge: Edge<T>? = null)
+class Visit(val type: VisitType, val edge: Edge? = null)
 
 enum class VisitType{
 	START,
