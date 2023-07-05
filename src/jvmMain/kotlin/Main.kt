@@ -3,10 +3,9 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.*
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.LocalContextMenuRepresentation
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -21,6 +20,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.draw.rotate
@@ -42,15 +42,12 @@ fun App() {
 	MaterialTheme {
 		Scaffold(
 			topBar = { MyTopAppBar() },
-			bottomBar = { MyGroundAppBar()},
-			floatingActionButton = {  Start() },
-			floatingActionButtonPosition = FabPosition.Center,
+			floatingActionButton = { leftRigthStartIcons() }
 		)
 		{
-			//ReadStartNode()
+
 		}
 	}
-
 }
 
 fun main() = application {
@@ -61,119 +58,93 @@ fun main() = application {
 
 @Composable
 fun MyTopAppBar() {
+	var showMenu by remember { mutableStateOf(false) }
+	var showAdd by remember { mutableStateOf(false) }
 	TopAppBar(
 		title = { Text("Поиск кратчайшего пути в графе. Алгоритм Дейкстры.") },
 		navigationIcon = {
-			IconButton(onClick = { /* doSomething() */ }) {
-				Icon(Icons.Filled.Menu, contentDescription = "Меню.")
+			IconButton(onClick = { showMenu = !showMenu}) {
+				Icon(Icons.Filled.Menu, contentDescription = "Меню")
+			}
+			DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+				DropdownMenuItem(onClick = { SelectTxtFile() }) {
+					Text("Загрузить граф")
+				}
+				Divider()
+				DropdownMenuItem(onClick = {  }) {
+					Text("Сохранить граф")
+				}
+				Divider()
 			}
 		},
 		actions = {
-			IconButton(onClick = { SelectTxtFile(Mode.IMPORT) }) {
-				Icon(Icons.Filled.Add, contentDescription = "Загрузить граф.")
+			IconButton(onClick = {}) {
+				Icon(Icons.Filled.Done , contentDescription = "Сброс")
+			}
+			IconButton(onClick = {showAdd = !showAdd}) {
+				Icon(Icons.Filled.Add, contentDescription = "Добавить объект графа")
+				DropdownMenu(expanded = showAdd, onDismissRequest = { showAdd = false}) {
+					DropdownMenuItem(onClick = {  }) {
+						Text("Добавить вершину")
+					}
+					Divider()
+					DropdownMenuItem(onClick = {  }) {
+						Text("Добавить ребро")
+					}
+					Divider()
+				}
 			}
 			IconButton(onClick = {}) {
-				Icon(Icons.Filled.Clear , contentDescription = "Очистить поле.")
+				Icon(Icons.Filled.Delete , contentDescription = "Удалить объект графа")
 			}
 			IconButton(onClick = {}) {
-				Icon(Icons.Filled.Delete , contentDescription = "Очистить поле.")
-			}
-			IconButton(onClick = {}) {
-				Icon(Icons.Filled.KeyboardArrowRight , contentDescription = "Очистить поле.")
+				Icon(Icons.Filled.Refresh , contentDescription = "Сброс")
 			}
 		}
 	)
 }
 
 @Composable
-fun MyGroundAppBar() {
-	BottomAppBar{
-		IconButton(onClick = {  }) { Icon(Icons.Filled.Favorite, contentDescription = "Избранное")}
-		Spacer(Modifier.weight(1f, true))
-		IconButton(onClick = {  }) { Icon(Icons.Filled.Info, contentDescription = "Информация о приложении")}
-	}
-}
-
-@Composable
-fun Start() {
+fun leftRigthStartIcons() {
 	val scope = rememberCoroutineScope()
 	val angle = remember { Animatable(initialValue = 0f) }
 	val checked = remember { mutableStateOf(false) }
-	FloatingActionButton(
-		content = {
-			Icon(
-				modifier = Modifier.rotate(angle.value),
-				imageVector = Icons.Filled.PlayArrow,
-				tint = if (checked.value) Color.Green else Color.Black,
-				contentDescription = null
-			)
-		},
-		onClick = {
-			//ReadStartNode()
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(bottom = 16.dp),
+		horizontalArrangement = Arrangement.Center,
+	) {
+		IconButton(onClick = {}, modifier = Modifier.size(50.dp)) {
+			Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Шаг назад")
+		}
+		Spacer(modifier = Modifier.width(40.dp))
+		IconButton(onClick = {
 			scope.launch() {
 				angle.snapTo(targetValue = 0f)
 				angle.animateTo(targetValue = 360f, animationSpec = keyframes { durationMillis = 2000 })
 				checked.value = false
 			}
 			checked.value = true
+		},
+			modifier = Modifier.size(48.dp)) {
+			Icon(modifier = Modifier.rotate(angle.value),
+				imageVector = Icons.Filled.PlayArrow,
+				tint = if (checked.value) Color.Green else Color.Black,
+				contentDescription = null)
 		}
-	)
-}
-
-
-enum class Mode {
-	IMPORT,
-	EXPORT
-}
-//@Composable
-fun SelectTxtFile(mode: Mode): File? {
-	val fd = if (mode == Mode.IMPORT) {
-		FileDialog(ComposeWindow(), "Choose file to import", FileDialog.LOAD)
-	} else {
-		FileDialog(ComposeWindow(), "Choose file to import", FileDialog.LOAD)
+		Spacer(modifier = Modifier.width(40.dp))
+		IconButton(onClick = {}, modifier = Modifier.size(48.dp)) {
+			Icon(Icons.Filled.KeyboardArrowRight, contentDescription = "Шаг вперед")
+		}
 	}
+}
+
+//@Composable
+fun SelectTxtFile() {
+	val fd = FileDialog(ComposeWindow(), "Choose file to import", FileDialog.LOAD)
 	fd.file = "tree.txt"
 	fd.isVisible = true
 	val fileString = fd.directory + fd.file
-	if (fileString != "nullnull") {
-		return File(fileString)
-	}
-	return null
 }
 
-//@OptIn(ExperimentalMaterialApi::class)
-//fun ReadStartNode() = application {
-//	val openDialog = remember { mutableStateOf(true) }
-//	var text by remember { mutableStateOf("") }
-//	AlertDialog(
-//		onDismissRequest = {
-//			openDialog.value = false
-//		},
-//		title = {
-//			Text(text = "Title")
-//		},
-//		text = {
-//			Column() {
-//				TextField(
-//					value = text,
-//					onValueChange = { text = it }
-//				)
-//				Text("Custom Text")
-//				Checkbox(checked = false, onCheckedChange = {})
-//			}
-//		},
-//		buttons = {
-//			Row(
-//				modifier = Modifier.padding(all = 8.dp),
-//				horizontalArrangement = Arrangement.Center
-//			) {
-//				Button(
-//					modifier = Modifier.fillMaxWidth(),
-//					onClick = { openDialog.value = false }
-//				) {
-//					Text("Dismiss")
-//				}
-//			}
-//		}
-//	)
-//}
