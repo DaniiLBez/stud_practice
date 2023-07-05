@@ -1,16 +1,16 @@
 package algorithm
 
-interface Graph <T>{
-	fun setStart(name: T)
-	fun getStartVertex(): T?
-	fun createVertex(data: T): Vertex<T>
+interface Graph{
+	fun setStart(name: String)
+	fun getStartVertex(): String?
+	fun createVertex(data: String): Vertex
 	fun add(
-		source: Vertex<T>,
-		destination: Vertex<T>,
+		source: Vertex,
+		destination: Vertex,
 		weight: Double?
 	)
-	fun edges(source: Vertex<T>): MutableList<Edge<T>>
-	fun weight(source: Vertex<T>, destination: Vertex<T>): Double?
+	fun edges(source: Vertex): MutableList<Edge>
+	fun weight(source: Vertex, destination: Vertex): Double?
 
-	fun vertex(name: T): Vertex<T>?
+	fun vertex(name: String): Vertex?
 }

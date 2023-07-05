@@ -2,7 +2,7 @@ package algorithm
 
 class GraphCreator(_data: IDataSource) {
 	private val data = _data
-	private var graph: Graph<String> = AdjacencyList()
+	private var graph: Graph = AdjacencyList()
 
 	fun create(){
 		val startVertex = data.getGraphStartVertex()

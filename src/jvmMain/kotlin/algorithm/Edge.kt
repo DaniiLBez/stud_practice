@@ -1,7 +1,7 @@
 package algorithm
 
-data class Edge<T>(
-	val source: Vertex<T>,
-	val destination: Vertex<T>,
+data class Edge(
+	val source: Vertex,
+	val destination: Vertex,
 	val weight: Double? = null
 )
