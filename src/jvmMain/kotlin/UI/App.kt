@@ -11,7 +11,8 @@ import androidx.compose.ui.graphics.Color
 fun App() {
 	MaterialTheme() {
 		Scaffold(
-			topBar = { MyTopAppBar() }
+			topBar = { MyTopAppBar() },
+			bottomBar = { iconInformation() }
 			//floatingActionButton = {  }
 		)
 		{

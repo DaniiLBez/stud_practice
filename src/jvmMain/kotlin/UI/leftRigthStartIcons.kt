@@ -30,8 +30,8 @@ fun leftRigthStartIcons() {
 		modifier = Modifier
 			.fillMaxWidth()
 			.padding(
-				top = 660.dp,
-				bottom = 15.dp),
+				top = 588.dp,
+				bottom = 5.dp),
 		horizontalArrangement = Arrangement.Center,
 	) {
 		OutlinedButton(

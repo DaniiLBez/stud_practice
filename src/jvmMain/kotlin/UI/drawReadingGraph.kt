@@ -18,14 +18,14 @@ fun drawGraph(){
 			.padding(
 				start = 10.dp,
 				top = 10.dp,
-				end = 300.dp,
-				bottom = 100.dp
+				end = 315.dp,
+				bottom = 135.dp
 			)
 			.border(
 				width = 2.dp,
 				color = Color(red = 58, green = 1, blue = 105),
 			)
-			.background(Color(red = 218, green = 186, blue = 245))
+			.background(Color.White)
 	) {
 	}
 }

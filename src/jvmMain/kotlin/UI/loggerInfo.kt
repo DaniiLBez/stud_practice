@@ -20,7 +20,7 @@ fun loggerInfo(){
 				start = 1237.dp,
 				top = 10.dp,
 				end = 10.dp,
-				bottom = 100.dp
+				bottom = 135.dp
 			)
 			.border(
 				width = 2.dp,
