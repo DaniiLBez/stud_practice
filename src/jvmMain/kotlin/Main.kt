@@ -1,7 +1,7 @@
 package UI
 
-import algorithm.AdjacencyList
-import algorithm.Graph
+import algorithm.graph.AdjacencyList
+import algorithm.graph.Graph
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 

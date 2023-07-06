@@ -1,7 +1,7 @@
 package UI
 
-import algorithm.FileReader
-import algorithm.GraphCreator
+import controller.FileReader
+import controller.GraphCreator
 import androidx.compose.ui.awt.ComposeWindow
 import java.awt.FileDialog
 

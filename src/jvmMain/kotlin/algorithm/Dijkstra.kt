@@ -44,7 +44,7 @@ class Dijkstra(private val graph: Graph) {
 		return path.sumByDouble { it.weight ?: 0.0 }
 	}
 
-	private fun shortestPath(startVertex: String) {
+	fun shortestPath(startVertex: String) {
 
 		val start = graph.vertex(startVertex) ?: return
 		distanceFromSource[start] = Visit(VisitType.START)
