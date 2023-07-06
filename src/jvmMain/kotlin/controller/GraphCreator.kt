@@ -1,4 +1,7 @@
-package algorithm
+package controller
+
+import algorithm.graph.AdjacencyList
+import algorithm.graph.Graph
 
 class GraphCreator(_data: IDataSource) {
 	private val data = _data

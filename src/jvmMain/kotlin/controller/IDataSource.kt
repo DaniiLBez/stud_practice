@@ -1,4 +1,4 @@
-package algorithm
+package controller
 
 open class IDataSource {
 	protected var rawGraphData: MutableMap<String, MutableList<Pair<String, Double>>> = mutableMapOf()

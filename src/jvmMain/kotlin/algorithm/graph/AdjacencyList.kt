@@ -1,4 +1,4 @@
-package algorithm
+package algorithm.graph
 
 class AdjacencyList : Graph {
 	private val adjacencies: HashMap<Vertex, MutableList<Edge>> = HashMap()

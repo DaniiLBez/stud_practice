@@ -1,4 +1,4 @@
-package algorithm
+package algorithm.graph
 
 interface Graph {
 	fun setStart(name: String)

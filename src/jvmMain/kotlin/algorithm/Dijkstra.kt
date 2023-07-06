@@ -1,18 +1,26 @@
 package algorithm
 
+import algorithm.graph.Edge
+import algorithm.graph.Graph
+import algorithm.graph.Vertex
 import java.util.PriorityQueue
 import kotlin.math.abs
 
 @Suppress("DEPRECATION")
 class Dijkstra(private val graph: Graph) {
-	private var distanceFromSource: HashMap<Vertex, Visit>? = null
-	private var resultPath: MutableList<Edge>? = null
+	private var distanceFromSource = hashMapOf<Vertex, Visit>()
+	private var path = mutableListOf<Edge>()
+
+	private var queue = PriorityQueue<Vertex> { first, second ->
+		abs(distance(second.name, distanceFromSource) - distance(first.name, distanceFromSource)).toInt()
+	}
+
+	private var steps = mutableListOf<MementoDijkstra>()
 	private fun route(
 		destination: String,
 		paths: HashMap<Vertex, Visit>
 	): MutableList<Edge> {
 		var vertex = graph.vertex(destination)
-		val path = mutableListOf<Edge>()
 		loop@while (true) {
 			val visit = paths[vertex] ?: break
 
@@ -23,6 +31,7 @@ class Dijkstra(private val graph: Graph) {
 				}
 				VisitType.START -> break@loop
 			}
+			steps.add(MementoDijkstra(vertex!!, distanceFromSource, queue, path))
 		}
 		return path
 	}
@@ -35,39 +44,31 @@ class Dijkstra(private val graph: Graph) {
 		return path.sumByDouble { it.weight ?: 0.0 }
 	}
 
-	fun shortestPath(startVertex: String) {
-		val start = graph.vertex(startVertex)
+	private fun shortestPath(startVertex: String) {
 
-		if (start == null) {
-			distanceFromSource = HashMap()
-			return
-		}
+		val start = graph.vertex(startVertex) ?: return
+		distanceFromSource[start] = Visit(VisitType.START)
+		queue.add(start)
 
-		val paths = hashMapOf<Vertex, Visit>()
-		paths[start] = Visit(VisitType.START)
+		steps.add(MementoDijkstra(start, distanceFromSource, queue, path))
 
-		val priorityQueue = PriorityQueue<Vertex> { first, second ->
-			abs(distance(second.name, paths) - distance(first.name, paths)).toInt()
-		}
-
-		priorityQueue.add(start)
-
-		while (priorityQueue.isNotEmpty()) {
-			val vertex = priorityQueue.remove()
+		while (queue.isNotEmpty()) {
+			val vertex = queue.remove()
 			val edges = graph.edges(vertex)
 
 			edges.forEach {
 				val weight = it.weight ?: return@forEach
 
-				if (paths[it.destination] == null ||
-					distance(vertex.name, paths) + weight < distance(it.destination.name, paths)
+				if (distanceFromSource[it.destination] == null ||
+					distance(vertex.name, distanceFromSource) + weight < distance(it.destination.name, distanceFromSource)
 				) {
-					paths[it.destination] = Visit(VisitType.EDGE, it)
-					priorityQueue.add(it.destination)
+					distanceFromSource[it.destination] = Visit(VisitType.EDGE, it)
+					queue.add(it.destination)
 				}
+				steps.add(MementoDijkstra(vertex, distanceFromSource, queue, path))
 			}
+			steps.add(MementoDijkstra(vertex, distanceFromSource, queue, path))
 		}
-		distanceFromSource = paths
 	}
 
 	fun shortestPath(
@@ -75,22 +76,20 @@ class Dijkstra(private val graph: Graph) {
 		destination: String
 	) {
 		this.shortestPath(source)
-		resultPath = route(destination, distanceFromSource!!)
+		path = route(destination, distanceFromSource)
 	}
-	fun getPath() = resultPath
-	fun getDistanceFromSourse() = distanceFromSource
 
 	override fun toString(): String {
 		return buildString {
 			append("Start Vertex: ${graph.getStartVertex()}\n\n")
 			append("Graph: \n$graph\n\n")
-			distanceFromSource!!.keys.forEach {
+			distanceFromSource.keys.forEach {
 
 				if (it.name == graph.getStartVertex()) return@forEach
 
 				shortestPath(graph.getStartVertex()!!, it.name)
 				var sumWeight = 0.0
-				resultPath?.forEach { edge ->
+				path.forEach { edge ->
 					sumWeight += edge.weight ?: 0.0
 					append("${edge.source.name} --|${edge.weight ?: 0.0}|--> ${edge.destination.name} +\n")
 				}
@@ -98,6 +97,7 @@ class Dijkstra(private val graph: Graph) {
 			}
 		}
 	}
+
 }
 
 class Visit(val type: VisitType, val edge: Edge? = null)

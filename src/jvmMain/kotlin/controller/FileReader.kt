@@ -1,4 +1,4 @@
-package algorithm
+package controller
 
 import java.io.*
 
