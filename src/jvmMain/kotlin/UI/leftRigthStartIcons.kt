@@ -31,19 +31,21 @@ fun leftRigthStartIcons() {
 			.fillMaxWidth()
 			.padding(
 				top = 588.dp,
-				bottom = 5.dp),
+				bottom = 5.dp
+			),
 		horizontalArrangement = Arrangement.Center,
 	) {
 		OutlinedButton(
 			onClick = {},
 			modifier = Modifier.size(50.dp),
 			shape = CircleShape,
-			border= BorderStroke(3.dp, Color(red = 58, green = 1, blue = 105)),
-			colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color(red = 58, green = 1, blue = 105))
-			) {
+			border = BorderStroke(3.dp, Color(red = 58, green = 1, blue = 105)),
+			colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(red = 58, green = 1, blue = 105))
+		) {
 			Icon(
 				Icons.Filled.ArrowBack,
-				contentDescription = "Шаг назад")
+				contentDescription = "Шаг назад"
+			)
 		}
 		Spacer(modifier = Modifier.width(40.dp))
 		OutlinedButton(
@@ -61,33 +63,36 @@ fun leftRigthStartIcons() {
 			},
 			modifier = Modifier.size(50.dp),
 			shape = CircleShape,
-			border= BorderStroke(3.dp, Color(red = 58, green = 1, blue = 105)),
-			colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color(red = 58, green = 1, blue = 105))
+			border = BorderStroke(3.dp, Color(red = 58, green = 1, blue = 105)),
+			colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(red = 58, green = 1, blue = 105))
 		) {
-			Icon(modifier = Modifier.rotate(angle.value),
+			Icon(
+				modifier = Modifier.rotate(angle.value),
 				imageVector = Icons.Filled.PlayArrow,
 				tint = if (checked.value) Color.Green else Color(red = 58, green = 1, blue = 105),
-				contentDescription = null)
+				contentDescription = null
+			)
 		}
 		Spacer(modifier = Modifier.width(40.dp))
 		Button(
 			onClick = {},
 			modifier = Modifier.size(width = 114.dp, height = 50.dp),
 			border = BorderStroke(3.dp, Color(red = 58, green = 1, blue = 105)),
-			colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color(red = 58, green = 1, blue = 105)),
+			colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(red = 58, green = 1, blue = 105)),
 			shape = RoundedCornerShape(50),
 		) {
 			Text(
 				text = "Результат",
-				fontWeight = FontWeight.Bold)
+				fontWeight = FontWeight.Bold
+			)
 		}
 		Spacer(modifier = Modifier.width(40.dp))
 		OutlinedButton(
 			onClick = {},
 			modifier = Modifier.size(50.dp),
 			shape = CircleShape,
-			border= BorderStroke(3.dp, Color(red = 58, green = 1, blue = 105)),
-			colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color(red = 58, green = 1, blue = 105))
+			border = BorderStroke(3.dp, Color(red = 58, green = 1, blue = 105)),
+			colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(red = 58, green = 1, blue = 105))
 		) {
 			Icon(
 				Icons.Filled.ArrowForward,

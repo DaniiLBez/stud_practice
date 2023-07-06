@@ -13,7 +13,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun MyTopAppBar() {
 	var showMenu by remember { mutableStateOf(false) }
@@ -28,7 +27,7 @@ fun MyTopAppBar() {
 				modifier = Modifier.padding(8.dp)
 			) {
 				IconButton(
-					onClick = { showMenu = !showMenu}
+					onClick = { showMenu = !showMenu }
 				) {
 					Icon(
 						Icons.Filled.Menu,
@@ -51,7 +50,7 @@ fun MyTopAppBar() {
 						Text("Загрузить граф")
 					}
 					Divider()
-					DropdownMenuItem(onClick = {  }) {
+					DropdownMenuItem(onClick = { }) {
 						Text("Сохранить граф")
 					}
 					Divider()
@@ -63,18 +62,20 @@ fun MyTopAppBar() {
 				modifier = Modifier.padding(8.dp)
 			) {
 				IconButton(
-					onClick = {showAdd = !showAdd},
-					modifier = Modifier.padding(start = 23.dp)) {
+					onClick = { showAdd = !showAdd },
+					modifier = Modifier.padding(start = 23.dp)
+				) {
 					Icon(
 						Icons.Filled.Add,
 						contentDescription = "Добавить объект графа",
-						tint = Color.White)
-					DropdownMenu(expanded = showAdd, onDismissRequest = { showAdd = false}) {
-						DropdownMenuItem(onClick = {  }) {
+						tint = Color.White
+					)
+					DropdownMenu(expanded = showAdd, onDismissRequest = { showAdd = false }) {
+						DropdownMenuItem(onClick = { }) {
 							Text("Добавить вершину")
 						}
 						Divider()
-						DropdownMenuItem(onClick = {  }) {
+						DropdownMenuItem(onClick = { }) {
 							Text("Добавить ребро")
 						}
 						Divider()
@@ -87,7 +88,8 @@ fun MyTopAppBar() {
 			) {
 				IconButton(
 					onClick = {},
-					modifier = Modifier.padding(start = 15.dp)) {
+					modifier = Modifier.padding(start = 15.dp)
+				) {
 					Icon(
 						Icons.Filled.Delete,
 						contentDescription = "Удалить элмент графа",
@@ -100,7 +102,8 @@ fun MyTopAppBar() {
 				modifier = Modifier.padding(8.dp)
 			) {
 				IconButton(onClick = {}) {
-					Icon(Icons.Filled.Refresh,
+					Icon(
+						Icons.Filled.Refresh,
 						contentDescription = "Сброс",
 						tint = Color.White
 					)

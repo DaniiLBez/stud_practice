@@ -9,7 +9,7 @@ class MementoDijkstra(
 	curDistances: HashMap<Vertex, Visit>,
 	curQueueVertexes: PriorityQueue<Vertex>,
 	curPaths: MutableList<Edge>
-	) {
+) {
 	val currentVertex = curVertex
 	val distances = curDistances.clone()
 	val inQueueVertexes = PriorityQueue(curQueueVertexes)

@@ -97,7 +97,6 @@ class Dijkstra(private val graph: Graph) {
 			}
 		}
 	}
-
 }
 
 class Visit(val type: VisitType, val edge: Edge? = null)

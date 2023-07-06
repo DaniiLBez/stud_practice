@@ -1,9 +1,8 @@
 package UI
 
+import androidx.compose.ui.awt.ComposeWindow
 import controller.FileReader
 import controller.GraphCreator
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.awt.ComposeWindow
 import java.awt.FileDialog
 
 fun SelectTxtFile() {
