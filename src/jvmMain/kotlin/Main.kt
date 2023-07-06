@@ -12,8 +12,3 @@ fun main() = application {
 		App()
 	}
 }
-
-
-
-
-
