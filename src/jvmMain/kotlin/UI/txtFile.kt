@@ -1,11 +1,11 @@
 package UI
 
-import controller.FileReader
-import controller.GraphCreator
+import algorithm.FileReader
+import algorithm.GraphCreator
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.awt.ComposeWindow
 import java.awt.FileDialog
 
-//@Composable
 fun SelectTxtFile() {
 	val fd = FileDialog(ComposeWindow(), "Choose file to import", FileDialog.LOAD)
 	fd.file = "tree.txt"
@@ -16,5 +16,4 @@ fun SelectTxtFile() {
 	val graphCreator = GraphCreator(fileReader)
 	graphCreator.create()
 	graph = graphCreator.getGraph()
-
 }
