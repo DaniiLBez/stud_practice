@@ -62,3 +62,7 @@ tasks.withType<Detekt>().configureEach {
         md.required.set(true)
     }
 }
+
+dependencies{
+    add("implementation", "org.webjars.npm:mxgraph:4.2.2")
+}
