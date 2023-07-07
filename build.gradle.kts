@@ -27,6 +27,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
+                implementation("org.tinyjee.jgraphx:jgraphx:3.4.1.3")
             }
         }
         val jvmTest by getting
@@ -61,8 +62,4 @@ tasks.withType<Detekt>().configureEach {
         sarif.required.set(true)
         md.required.set(true)
     }
-}
-
-dependencies {
-    add("implementation", "org.webjars.npm:mxgraph:4.2.2")
 }
