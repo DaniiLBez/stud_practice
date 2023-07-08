@@ -21,6 +21,14 @@ kotlin {
         jvmToolchain(11)
         withJava()
     }
+    sourceSets {
+        val jvmMain by getting {
+            dependencies {
+                implementation("org.tinyjee.jgraphx:jgraphx:3.4.1.3")
+            }
+        }
+        val jvmTest by getting
+    }
 }
 
 ktlint {
