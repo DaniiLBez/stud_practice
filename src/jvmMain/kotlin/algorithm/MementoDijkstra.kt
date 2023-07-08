@@ -5,13 +5,25 @@ import algorithm.graph.Vertex
 import java.util.PriorityQueue
 
 class MementoDijkstra(
-	curVertex: Vertex,
+	curVertex: String,
 	curDistances: HashMap<Vertex, Visit>,
-	curQueueVertexes: PriorityQueue<Vertex>,
-	curPaths: MutableList<Edge>
+	currentWay: MutableList<Edge>,
+	currentQueue: PriorityQueue<Vertex>,
+//	logs: MutableList<String>
 ) {
-	val currentVertex = curVertex
-	val distances = curDistances.clone()
-	val inQueueVertexes = PriorityQueue(curQueueVertexes)
-	val paths = curPaths
+	var currentVertex = curVertex
+	var distances = curDistances.clone()
+	var curPath = currentWay
+	var curQueue = PriorityQueue(currentQueue)
+//	var logs = logs
+
+	override fun toString(): String {
+		return buildString {
+			append(this@MementoDijkstra.curPath.toString()).append("\n")
+			append(this@MementoDijkstra.currentVertex + "\n")
+			append(distances.toString()+"\n")
+			append(curQueue.toString()+"\n")
+//			append(logs).append("\n")
+		}
+	}
 }
