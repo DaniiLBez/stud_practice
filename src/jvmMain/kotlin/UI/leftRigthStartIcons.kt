@@ -56,9 +56,9 @@ fun leftRigthStartIcons() {
 					angle.animateTo(targetValue = 360f, animationSpec = keyframes { durationMillis = 2000 })
 					checked.value = false
 				}
-				val dijkstra = Dijkstra(graph)
-				dijkstra.shortestPath(graph.getStartVertex()!!)
-				println(dijkstra.toString())
+//				val dijkstra = Dijkstra(graph)
+//				dijkstra.shortestPath(graph.getStartVertex()!!)
+//				println(dijkstra.toString())
 				checked.value = true
 			},
 			modifier = Modifier.size(50.dp),

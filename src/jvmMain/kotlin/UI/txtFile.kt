@@ -14,5 +14,5 @@ fun SelectTxtFile() {
 	fileReader.readData()
 	val graphCreator = GraphCreator(fileReader)
 	graphCreator.create()
-	graph = graphCreator.getGraph()
+		//graph = graphCreator.getGraph()
 }

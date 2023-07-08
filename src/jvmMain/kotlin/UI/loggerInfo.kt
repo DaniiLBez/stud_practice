@@ -16,7 +16,7 @@ fun loggerInfo() {
 			.fillMaxHeight()
 			.fillMaxWidth()
 			.padding(
-				start = 1237.dp,
+				start = 975.dp,
 				top = 10.dp,
 				end = 10.dp,
 				bottom = 135.dp
