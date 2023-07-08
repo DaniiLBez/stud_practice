@@ -13,4 +13,5 @@ interface Graph {
 	fun weight(source: Vertex, destination: Vertex): Double?
 
 	fun vertex(name: String): Vertex?
+	fun edges(): HashMap<Vertex, MutableList<Edge>>
 }

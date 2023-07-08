@@ -40,10 +40,12 @@ class AdjacencyList : Graph {
 		return buildString { // 1
 			adjacencies.forEach { (vertex, edges) -> // 2
 				val edgeString = edges.joinToString {
-					it.destination.name.toString()
+					it.destination.name
 				} // 3
 				append("${vertex.name} ---> [ $edgeString ]\n") // 4
 			}
 		}
 	}
+
+	override fun edges(): HashMap<Vertex, MutableList<Edge>> = adjacencies
 }
