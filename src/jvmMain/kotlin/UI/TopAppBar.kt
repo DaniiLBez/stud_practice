@@ -47,15 +47,6 @@ class TopAppBar(controller: GraphCreatorController) : JPanel() {
 		val panelButton = JPanel()
 		panelButton.background = Color(190, 160, 255)
 		val buttonList: MutableList<JButton> = ArrayList()
-		boxSaveLoad = JComboBox<Any?>(SaveLoad)
-		(boxSaveLoad as JComboBox<Any?>)
-			.addActionListener(
-				ActionListener {
-					e: ActionEvent? -> controller.saveGraph()
-				}
-			)
-		(boxSaveLoad as JComboBox<Any?>).background = Color.WHITE
-		(boxSaveLoad as JComboBox<Any?>).border = BorderFactory.createLineBorder(Color(78, 0, 102), 2, true)
 
 		createButton(Constants.SAVE,
 			{ e: ActionEvent? -> controller.saveGraph() }, buttonList, true
@@ -75,16 +66,13 @@ class TopAppBar(controller: GraphCreatorController) : JPanel() {
 		deleteButton = createButton(Constants.DELETE,
 			{ e: ActionEvent? -> controller.setStateOfDelete() }, buttonList, true
 		)
-		dijkstraButton = createButton("Алгоритм Дейкстры",
-			{ e: ActionEvent? -> controller.setStateOfAlgorithm() }, buttonList, true
-		)
 
-		panelButton.add(boxSaveLoad)
 		buttonList.forEach(Consumer { button: JButton? ->
 			panelButton.add(
 				button
 			)
 		})
+
 		add(panelButton, BorderLayout.NORTH)
 	}
 

@@ -19,6 +19,7 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 	private var startButton: JButton? = null
 	private var finishButton: JButton? = null
 	private var resetButton: JButton? = null
+	private var ranAlgorithm: JButton? = null
 
 	init {
 		this.controller = controller
@@ -29,6 +30,7 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 		layout = BorderLayout()
 		background = Color(190, 160, 255)
 		initButtonControlAlgorithms()
+		initStartAlgorithm()
 	}
 
 	private fun initButtonControlAlgorithms() {
@@ -59,6 +61,24 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 		add(panel, BorderLayout.NORTH)
 	}
 
+	private fun initStartAlgorithm() {
+		val panel = JPanel()
+		panel.background = Color(190, 160, 255)
+		val buttonList: MutableList<JButton> = ArrayList()
+
+		ranAlgorithm = createRanButton("Алгоритм Дейкстры",
+			{ e: ActionEvent? -> controller.setStateOfAlgorithm() }, buttonList, true
+		)
+
+		buttonList.forEach(Consumer { button: JButton? ->
+			panel.add(
+				button
+			)
+		})
+
+		add(panel, BorderLayout.CENTER)
+	}
+
 	private fun createButton(
 		name: String,
 		listener: ActionListener,
@@ -68,6 +88,23 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 	{
 		val imageOfIcon = ImageIcon(name)
 		val button = JButton()
+		button.icon = imageOfIcon
+		button.addActionListener(listener)
+		button.background = Color.WHITE
+		button.isEnabled = enabled
+		container.add(button)
+		return button
+	}
+
+	private fun createRanButton(
+		name: String,
+		listener: ActionListener,
+		container: MutableList<JButton>,
+		enabled: Boolean
+	): JButton
+	{
+		val imageOfIcon = ImageIcon("images/ran.png")
+		val button = JButton("Запустить алгоритм")
 		button.icon = imageOfIcon
 		button.addActionListener(listener)
 		button.background = Color.WHITE
