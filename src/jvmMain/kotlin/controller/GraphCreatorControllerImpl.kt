@@ -1,115 +1,111 @@
 package controller
 
+import View.GraphCreatorView
+import model.adapter.IAdapter
+import model.states.GraphCreatorModel
 import java.awt.event.MouseEvent
 import java.io.File
 import java.io.IOException
 
 
-class GraphCreatorImpl {
-	private val model: GraphCreatorModel? = null
-	private val adapter: GraphAdapter? = null
+class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter: IAdapter): GraphCreatorController {
 	private var view: GraphCreatorView? = null
 	private var currentState: State? = null
 
-	fun GraphCreatorControllerImpl(model: GraphCreatorModel?, adapter: GraphAdapter?) {
-		this.model = model
-		this.adapter = adapter
-	}
-
-	fun saveGraph() {
-		val file: File = view.showFileChooserDialog("Сохранить граф")
+	override fun saveGraph() {
+		val file: File = view!!.showFileChooserDialog("Сохранить граф")!!
 		if (file != null) {
 			try {
-				model.saveGraph(file.absoluteFile.toString())
+				model!!.saveGraph(file.absoluteFile.toString())
 			} catch (e: IOException) {
-				view.showErrorDialog("Ошибка", "Не удалось сохраненить граф. Попробуйте еще раз!")
+				view!!.showErrorDialog("Ошибка", "Не удалось сохраненить граф. Попробуйте еще раз!")
 			}
 		}
 	}
 
-	fun loadGraph() {
-		val file: File = view.showFileChooserDialog("Загрузить граф")
+	override fun loadGraph() {
+		val file: File = view!!.showFileChooserDialog("Загрузить граф")!!
 		if (file != null) {
 			try {
 				model.loadGraph(file.absoluteFile.toString())
 			} catch (e: Exception) {
-				view.showErrorDialog("Ошибка", "Не удалось загрузить граф. Попробуйте еще раз!")
+				view!!.showErrorDialog("Ошибка", "Не удалось загрузить граф. Попробуйте еще раз!")
 			}
 		}
 	}
 
-	fun setStateOfMotion() {
+	override fun setStateOfMotion() {
 		currentState.close()
 		currentState = MoveState(model)
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun setStateOfAddingVertices() {
+	override fun setStateAddingVertices() {
 		currentState.close()
 		currentState = AddVertexState(model, view)
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun setStateOfConnectionVertices() {
+	override fun setStateOfConnectionVerticies() {
 		currentState.close()
 		currentState = ConnectionVertexState(model, view)
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun setStateOfDelete() {
+	override fun setStateOfDelete() {
 		currentState.close()
 		currentState = DeleteState(model)
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun setStateOfAlgorithm() {
+	override fun setStateOfAlgorithm() {
 		currentState.close()
 		if (currentState !is AlgorithmShortestWayState) {
 			currentState = AlgorithmShortestWayState(model, view, adapter)
 		}
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun nextStep() {
+	override fun nextStep() {
 		currentState.nextStep()
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun backStep() {
+	override fun backStep() {
 		currentState.backStep()
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun startAlgorithm() {
+	override fun startAlgorithm() {
 		currentState.startAlgorithm()
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun finishAlgorithm() {
+	override fun finishAlgorithm() {
 		currentState.finishAlgorithm()
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun resetAlgorithm() {
+	override fun resetAlgorithm() {
 		currentState.resetAlgorithm()
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun mousePressed(e: MouseEvent, cell: Any?) {
-		currentState.mousePressed(e.getX(), e.getY(), cell)
-		view.setLabelHelp(currentState.getStatus())
+	override fun mousePressed(e: MouseEvent?, cell: Any?) {
+		currentState.mousePressed(e!!.x, e.y, cell)
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun mouseReleased(e: MouseEvent?, cell: Any?) {
-		if (e != null) currentState.mouseReleased(e.getX(), e.getY(), cell) else currentState.mouseReleased(
+	override fun mouseReleased(e: MouseEvent?, cell: Any?) {
+		if (e != null) currentState.mouseReleased(e.x, e.y, cell) else currentState.mouseReleased(
 			-1,
 			-1,
 			cell
 		)
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	fun setView(view: GraphCreatorView) {
+	override fun setView(view: GraphCreatorView) {
 		this.view = view
 		currentState = AddVertexState(model, view)
 		view.setLabelHelp(currentState.getStatus())
