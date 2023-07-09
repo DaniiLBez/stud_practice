@@ -20,8 +20,8 @@ class AddVertexState(model: GraphCreatorModel, view: GraphCreatorView) : IState 
 	override fun finishAlgorithm() {}
 	override fun resetAlgorithm() {}
 	override fun mousePressed(posX: Double, posY: Double, cell: Any?) {
-		val name: String = view.showInputDialog("Добавить вершину", "Введите название вершины")!!
-		if (name != null && !name.isEmpty()) {
+		val name = view.showInputDialog("Добавить вершину", "Введите название вершины")
+		if (!name.isNullOrEmpty()) {
 			if (!model.addVertex(
 					name,
 					posX - Constants.WIDTH_VERTEX / 2,

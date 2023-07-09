@@ -13,7 +13,7 @@ class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter
 	private var currentState: IState? = null
 
 	override fun saveGraph() {
-		val file: File = view!!.showFileChooserDialog("Сохранить граф")!!
+		val file = view!!.showFileChooserDialog("Сохранить граф")
 		if (file != null) {
 			try {
 				model.saveGraph(file.absoluteFile.toString())
@@ -24,7 +24,7 @@ class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter
 	}
 
 	override fun loadGraph() {
-		val file: File = view!!.showFileChooserDialog("Загрузить граф")!!
+		val file = view!!.showFileChooserDialog("Загрузить граф")
 		if (file != null) {
 			try {
 				model.loadGraph(file.absoluteFile.toString())

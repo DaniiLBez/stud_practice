@@ -72,7 +72,7 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 			{ e: ActionEvent? -> controller.setStateOfDelete() }, buttonList, true
 		)
 		comboBoxAlgorithms = JComboBox<Any?>(ITEMS)
-		(comboBoxAlgorithms as JComboBox<Any?>).addActionListener(ActionListener { e: ActionEvent? -> controller.setStateOfAlgorithm() })
+		(comboBoxAlgorithms as JComboBox<*>).addActionListener { controller.setStateOfAlgorithm() }
 		buttonList.forEach(
 			Consumer { button: JButton? ->
 				panelButton.add(
@@ -167,7 +167,7 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 	}
 
 	val selectAlgorithm: String?
-		get() = if (comboBoxAlgorithms!!.selectedItem != null) comboBoxAlgorithms!!.selectedItem.toString() else null
+		get() = if (comboBoxAlgorithms!!.selectedItem != null) comboBoxAlgorithms!!.selectedItem?.toString() else null
 
 	companion object {
 		private val ITEMS = arrayOf<String?>(Constants.DIJKSTRA)

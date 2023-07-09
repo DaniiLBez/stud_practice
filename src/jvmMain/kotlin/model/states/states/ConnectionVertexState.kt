@@ -24,8 +24,8 @@ class ConnectionVertexState(model: GraphCreatorModel, view: GraphCreatorView) : 
 	// Обработка второго нажатия
 	private fun handlerSecondPressed(cell: mxCell) {
 		if (model.checkExistEdge(sourceVertex, cell) == -1) {
-			val weight: String = view.showInputDialog("Добавить ребро", "Введите вес ребра")!!
-			if (weight != null && !weight.isEmpty()) {
+			val weight = view.showInputDialog("Добавить ребро", "Введите вес ребра")
+			if (!weight.isNullOrEmpty()) {
 				if (!model.addEdge(weight, sourceVertex, cell)) {
 					view.showErrorDialog("Ошибка", "Не правильный формат данных")
 				}

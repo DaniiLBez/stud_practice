@@ -47,12 +47,12 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		return true
 	}
 
-	override fun addEdge(weight: String?, v1: Any?, v2: Any?): Boolean {
+	override fun addEdge(weight: String?, vertex1: Any?, vertex2: Any?): Boolean {
 		try {
 			val w = weight!!.toDouble()
 			if (w < 0) return false
 			graph.model.beginUpdate()
-			graph.insertEdge(parent, null, weight, v1, v2, Constants.MY_CUSTOM_EDGE_NORMAL_STYLE)
+			graph.insertEdge(parent, null, weight, vertex1, vertex2, Constants.MY_CUSTOM_EDGE_NORMAL_STYLE)
 			graph.model.endUpdate()
 		} catch (e: NumberFormatException) {
 			return false
@@ -83,16 +83,15 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 
 	override fun setStyleSelected(flag: Boolean, cells: MutableList<mxCell>?) {
 		for (c in cells!!) {
-			val cell = c as mxCell
 			if (flag) {
-				if (cell.isVertex) {
-					graph.setCellStyle(Constants.MY_CUSTOM_VERTEX_SELECTED_STYLE, arrayOf<Any>(cell))
-				} else if (cell.isEdge) graph.setCellStyle(Constants.MY_CUSTOM_EDGE_SELECTED_STYLE, arrayOf<Any>(cell))
+				if (c.isVertex) {
+					graph.setCellStyle(Constants.MY_CUSTOM_VERTEX_SELECTED_STYLE, arrayOf<Any>(c))
+				} else if (c.isEdge) graph.setCellStyle(Constants.MY_CUSTOM_EDGE_SELECTED_STYLE, arrayOf<Any>(c))
 			} else {
-				if (cell.isVertex) graph.setCellStyle(
+				if (c.isVertex) graph.setCellStyle(
 					Constants.MY_CUSTOM_VERTEX_NORMAL_STYLE,
-					arrayOf<Any>(cell)
-				) else if (cell.isEdge) graph.setCellStyle(Constants.MY_CUSTOM_EDGE_NORMAL_STYLE, arrayOf<Any>(cell))
+					arrayOf<Any>(c)
+				) else if (c.isEdge) graph.setCellStyle(Constants.MY_CUSTOM_EDGE_NORMAL_STYLE, arrayOf<Any>(c))
 			}
 		}
 	}

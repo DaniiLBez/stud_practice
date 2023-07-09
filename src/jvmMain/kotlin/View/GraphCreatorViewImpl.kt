@@ -95,7 +95,4 @@ class GraphCreatorViewImpl(
 	override val selectAlgorithm: String
 		get() = toolBar!!.selectAlgorithm!!
 
-	fun getToolBar(): ToolBar? {
-		return toolBar
-	}
 }
