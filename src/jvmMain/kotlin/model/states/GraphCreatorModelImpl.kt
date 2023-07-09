@@ -4,7 +4,6 @@ import Constants
 import com.mxgraph.model.mxCell
 import com.mxgraph.view.mxGraph
 import java.io.*
-import java.lang.constant.Constable
 
 class GraphCreatorModelImpl : GraphCreatorModel {
 	override val graph: mxGraph
