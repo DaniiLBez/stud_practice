@@ -1,5 +1,10 @@
 package model.adapter
 
+import Constants
+import algorithm.dijkstra.Dijkstra
+import algorithm.dijkstra.ShortestWay
+import algorithm.dijkstra.ShortestWayAlgorithm
+import algorithm.graph.WeightedDigraph
 import com.mxgraph.model.mxCell
 import com.mxgraph.view.mxGraph
 import model.algorithm.ShortestWayView
@@ -9,7 +14,7 @@ import java.util.function.Consumer
 
 
 
-class MxGraphAdapter : IAdapter {
+class Adapter : IAdapter {
 	private fun convertFromMxGraphToGraph(graph: mxGraph): String {
 		val vertex: MutableSet<String> = HashSet()
 		val sb = StringBuilder()
@@ -19,13 +24,13 @@ class MxGraphAdapter : IAdapter {
 			val target = edge.getTarget().getValue() as String
 			vertex.add(source)
 			vertex.add(target)
-			sb.append(source).append(SEPARATOR).append(target).append(SEPARATOR).append(edge.getValue()).append("\n")
+			sb.append(source).append(Constants.SEPARATOR).append(target).append(Constants.SEPARATOR).append(edge.getValue()).append("\n")
 		}
 		for (v in graph.getChildVertices(graph.getDefaultParent())) {
 			val ver: mxCell = v as mxCell
 			if (!vertex.contains(ver.getValue())) {
 				vertex.add(ver.getValue() as String)
-				sb.append(ver.getValue() as String).append(SEPARATOR).append("\n")
+				sb.append(ver.getValue() as String).append(Constants.SEPARATOR).append("\n")
 			}
 		}
 		return sb.toString()
@@ -35,7 +40,7 @@ class MxGraphAdapter : IAdapter {
 		val cells: MutableList<mxCell> = ArrayList<mxCell>()
 		val scanner = Scanner(subgraph)
 		while (scanner.hasNextLine()) {
-			val a = scanner.nextLine().split(java.lang.String.format("[\\%s]", SEPARATOR).toRegex())
+			val a = scanner.nextLine().split(java.lang.String.format("[\\%s]", Constants.SEPARATOR).toRegex())
 				.dropLastWhile { it.isEmpty() }
 				.toTypedArray()
 			if (a.size == 1) {
@@ -66,12 +71,12 @@ class MxGraphAdapter : IAdapter {
 	): MutableList<ShortestWayView> {
 		val mementosView: MutableList<ShortestWayView> = ArrayList<ShortestWayView>()
 		for (memento in mementos) {
-			val currentVertex = convertFromGraphToMxGraph(graph, memento.getCurrentVertex(digraph, SEPARATOR))
-			val processedVertices = convertFromGraphToMxGraph(graph, memento.getProcessedVertices(digraph, SEPARATOR))
-			val currentWays = convertFromGraphToMxGraph(graph, memento.getCurrentWays(digraph, SEPARATOR))
-			val inQueueVertices = convertFromGraphToMxGraph(graph, memento.getInQueueVertices(digraph, SEPARATOR))
+			val currentVertex = convertFromGraphToMxGraph(graph, memento.getCurrentVertex(digraph, Constants.SEPARATOR))
+			val processedVertices = convertFromGraphToMxGraph(graph, memento.getProcessedVertices(digraph, Constants.SEPARATOR))
+			val currentWays = convertFromGraphToMxGraph(graph, memento.getCurrentWays(digraph, Constants.SEPARATOR))
+			val inQueueVertices = convertFromGraphToMxGraph(graph, memento.getInQueueVertices(digraph, Constants.SEPARATOR))
 			val log: String =
-				java.lang.String.format(memento.getLog().get(0), digraph.name(memento.getLog().get(1).toInt()))
+				java.lang.String.format(memento.log.get(0), digraph.name(memento.log.get(1).toInt()))
 			if (currentVertex != null) mementosView.add(
 				ShortestWayView(
 					currentVertex[0],
@@ -95,33 +100,30 @@ class MxGraphAdapter : IAdapter {
 		return mementosView
 	}
 
-	fun shortestWay(alg: String?, gr: Any, s: Any, t: Any, callbackEnd: Consumer<List<ShortestWayView>?>) {
+	override fun  shortestWay(alg: String?, gr: Any?, s: Any?, t: Any?, callbackEnd: Consumer<List<ShortestWayView?>?>?) {
 		Thread {
-			val digraph = WeightedDigraph(convertFromMxGraphToGraph(gr as mxGraph), SEPARATOR)
+			val digraph = WeightedDigraph(convertFromMxGraphToGraph(gr as mxGraph), Constants.SEPARATOR)
 			var mementosView: MutableList<ShortestWayView>? = null
 			var algorithm: ShortestWayAlgorithm? = null
 			val sourceStr = (s as mxCell).getValue() as String
 			val targetStr = (t as mxCell).getValue() as String
 			when (alg) {
-				DIJKSTRA -> {
+				Constants.DIJKSTRA -> {
 					algorithm = Dijkstra()
 					mementosView =
-						convertToView(gr as mxGraph, digraph, digraph.shortestWay(sourceStr, targetStr, algorithm))
+						convertToView(gr as mxGraph, digraph, digraph.shortestWay(sourceStr, targetStr, algorithm!!))
 				}
-
-				FORD_BELLMAN -> {}
-				ASTAR -> {}
 			}
 			if (algorithm != null) {
 				val sb = StringBuilder()
 				val answer: Array<Any>?
 				val log: String
 				if (algorithm.hasPathTo(digraph.index(targetStr))) {
-					for (e in algorithm.pathTo(digraph.index(targetStr))) {
-						sb.append(digraph.name(e.getFrom()))
-							.append(SEPARATOR)
-							.append(digraph.name(e.getTo()))
-							.append(SEPARATOR).append(e.getWeight())
+					for (e in algorithm.pathTo(digraph.index(targetStr))!!) {
+						sb.append(digraph.name(e!!.from))
+							.append(Constants.SEPARATOR)
+							.append(digraph.name(e.to))
+							.append(Constants.SEPARATOR).append(e.weight)
 							.append("\n")
 					}
 					log = "Путь из вершины $sourceStr в вершину $targetStr найден \n$sb"
@@ -137,7 +139,7 @@ class MxGraphAdapter : IAdapter {
 					)
 				)
 			}
-			callbackEnd.accept(mementosView)
+			callbackEnd!!.accept(mementosView)
 		}.start()
 	}
 }

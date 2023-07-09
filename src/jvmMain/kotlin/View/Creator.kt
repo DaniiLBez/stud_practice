@@ -1,15 +1,15 @@
 package View
 
 import controller.GraphCreatorController
-import model.GraphCreatorModel
 import com.mxgraph.swing.mxGraphComponent
 import com.mxgraph.util.mxEvent
 import com.mxgraph.view.mxGraph
+import model.states.GraphCreatorModel
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 
 internal class Creator(controller: GraphCreatorController, model: GraphCreatorModel) :
-	mxGraphComponent(model.getGraph() as mxGraph)
+	mxGraphComponent(model.graph as mxGraph)
 {
 	private val controller: GraphCreatorController
 

@@ -1,8 +1,9 @@
 package View
 
-import com.company.View.ToolBar
+import Constants
+import com.company.view.ToolBar
 import controller.GraphCreatorController
-import model.GraphCreatorModel
+import model.states.GraphCreatorModel
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Dimension
@@ -32,10 +33,10 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 		isResizable = false
 		setLocationRelativeTo(null)
 		val panel = JPanel()
-		panel.layout = BorderLayout(INTEND, INTEND)
-		panel.border = EmptyBorder(INTEND, INTEND, INTEND, INTEND)
+		panel.layout = BorderLayout(Constants.INTEND, Constants.INTEND)
+		panel.border = EmptyBorder(Constants.INTEND, Constants.INTEND, Constants.INTEND, Constants.INTEND)
 		toolBar = ToolBar(controller)
-		toolBar.setPreferredSize(Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.12).toInt()))
+		toolBar!!.setPreferredSize(Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.12).toInt()))
 		val creator = Creator(controller, model)
 		creator.setPreferredSize(Dimension((sSize.width * 0.7).toInt(), (sSize.height * 0.75).toInt()))
 		textArea = JTextArea(100, 50)
@@ -52,27 +53,27 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 	}
 
 	override fun setEnabledStartButton(show: Boolean) {
-		toolBar.setEnabledStartButton(show)
+		toolBar!!.setEnabledStartButton(show)
 	}
 
 	override fun setEnabledFinishButton(show: Boolean) {
-		toolBar.setEnabledFinishButton(show)
+		toolBar!!.setEnabledFinishButton(show)
 	}
 
 	override fun setEnabledNextButton(show: Boolean) {
-		toolBar.setEnabledNextButton(show)
+		toolBar!!.setEnabledNextButton(show)
 	}
 
 	override fun setEnabledBackButton(show: Boolean) {
-		toolBar.setEnabledBackButton(show)
+		toolBar!!.setEnabledBackButton(show)
 	}
 
 	override fun setEnabledResetButton(show: Boolean) {
-		toolBar.setEnabledResetButton(show)
+		toolBar!!.setEnabledResetButton(show)
 	}
 
 	override fun setLabelHelp(strHelp: String?) {
-		toolBar.setLabelHelp(strHelp)
+		toolBar!!.setLabelHelp(strHelp)
 	}
 
 	override fun setLog(message: String?) {
@@ -94,7 +95,7 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 	}
 
 	override val selectAlgorithm: String
-		get() = toolBar.getSelectAlgorithm()
+		get() = toolBar!!.selectAlgorithm!!
 
 	fun getToolBar(): ToolBar? {
 		return toolBar

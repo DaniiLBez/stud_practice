@@ -13,7 +13,7 @@ import javax.swing.JComboBox
 import javax.swing.JLabel
 import javax.swing.JPanel
 
-internal class ToolBar(controller: GraphCreatorController) : JPanel() {
+class ToolBar(controller: GraphCreatorController) : JPanel() {
 	private val controller: GraphCreatorController
 	private var comboBoxAlgorithms: JComboBox<*>? = null
 	var labelHelp: JLabel? = null

@@ -6,7 +6,7 @@ import algorithm.graph.WeightedDigraph
 import java.util.*
 
 
-class MementoShortestWay(
+class ShortestWay(
 	private val currentVertex: Int,
 	processedVertices: MutableList<Boolean>,
 	currentWays: MutableList<DirectedEdge>,
