@@ -1,5 +1,6 @@
 package controller
 
+import View.GraphCreatorView
 import java.awt.event.MouseEvent
 
 interface GraphCreatorController {

@@ -105,9 +105,9 @@ class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter
 		view!!.setLabelHelp(currentState.getStatus())
 	}
 
-	override fun setView(view: GraphCreatorView) {
+	override fun setView(view: GraphCreatorView?) {
 		this.view = view
 		currentState = AddVertexState(model, view)
-		view.setLabelHelp(currentState.getStatus())
+		view!!.setLabelHelp(currentState.getStatus())
 	}
 }
