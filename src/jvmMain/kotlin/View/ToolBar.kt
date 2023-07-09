@@ -57,10 +57,10 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 			{ e: ActionEvent? -> controller.setStateOfMotion() }, buttonList, true
 		)
 		addVertexButton = createButton(Constants.ADD_VERTEX,
-			{ e: ActionEvent? -> controller.setStateOfAddingVertices() }, buttonList, true
+			{ e: ActionEvent? -> controller.setStateAddingVertices() }, buttonList, true
 		)
 		connectVertexButton = createButton(Constants.CONNECT_VERTEX,
-			{ e: ActionEvent? -> controller.setStateOfConnectionVertices() }, buttonList, true
+			{ e: ActionEvent? -> controller.setStateOfConnectionVerticies() }, buttonList, true
 		)
 		deleteButton = createButton(Constants.DELETE,
 			{ e: ActionEvent? -> controller.setStateOfDelete() }, buttonList, true

@@ -17,8 +17,8 @@ class ShortestWayView(
 		return processedVertices
 	}
 
-	fun getCurrentWays(): Array<Any>? {
-		return currentWays
+	fun getCurrentWays(): Array<Any> {
+		return currentWays!!
 	}
 
 	fun getInQueueVertices(): Array<Any>? {
