@@ -27,7 +27,6 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 	private fun initGUI() {
 		val sSize = Toolkit.getDefaultToolkit().screenSize
 		setSize(sSize.width, sSize.height)
-		isResizable = false
 		setLocationRelativeTo(null)
 
 		val panel = JPanel()
