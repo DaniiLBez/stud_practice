@@ -17,8 +17,8 @@ class ShortestWay(
 	private val inQueueVertices: PriorityQueue<Entry>
 
 	init {
-		this.processedVertices = processedVertices
-		this.currentWays = currentWays
+		this.processedVertices = processedVertices.toMutableList()
+		this.currentWays = currentWays.toMutableList()
 		this.inQueueVertices = PriorityQueue(inQueueVertices)
 	}
 

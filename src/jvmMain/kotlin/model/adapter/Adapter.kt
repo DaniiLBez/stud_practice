@@ -66,7 +66,7 @@ class Adapter : IAdapter {
 		digraph: WeightedDigraph,
 		mementos: List<ShortestWay>
 	): MutableList<ShortestWayView> {
-		val mementosView: MutableList<ShortestWayView> = ArrayList<ShortestWayView>()
+		val mementosView = mutableListOf<ShortestWayView>()
 		for (memento in mementos) {
 			val currentVertex = convertFromGraphToMxGraph(graph, memento.getCurrentVertex(digraph, Constants.SEPARATOR))
 			val processedVertices = convertFromGraphToMxGraph(graph, memento.getProcessedVertices(digraph, Constants.SEPARATOR))
