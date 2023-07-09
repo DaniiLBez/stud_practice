@@ -47,31 +47,39 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 	private fun initButtons() {
 		val panelButton = JPanel()
 		val buttonList: MutableList<JButton> = ArrayList()
-		createButton(Constants.SAVE,
+		createButton(
+			Constants.SAVE,
 			{ e: ActionEvent? -> controller.saveGraph() }, buttonList, true
 		)
-		createButton(Constants.LOAD,
+		createButton(
+			Constants.LOAD,
 			{ e: ActionEvent? -> controller.loadGraph() }, buttonList, true
 		)
-		moveButton = createButton(Constants.MOVE,
+		moveButton = createButton(
+			Constants.MOVE,
 			{ e: ActionEvent? -> controller.setStateOfMotion() }, buttonList, true
 		)
-		addVertexButton = createButton(Constants.ADD_VERTEX,
+		addVertexButton = createButton(
+			Constants.ADD_VERTEX,
 			{ e: ActionEvent? -> controller.setStateAddingVertices() }, buttonList, true
 		)
-		connectVertexButton = createButton(Constants.CONNECT_VERTEX,
+		connectVertexButton = createButton(
+			Constants.CONNECT_VERTEX,
 			{ e: ActionEvent? -> controller.setStateOfConnectionVerticies() }, buttonList, true
 		)
-		deleteButton = createButton(Constants.DELETE,
+		deleteButton = createButton(
+			Constants.DELETE,
 			{ e: ActionEvent? -> controller.setStateOfDelete() }, buttonList, true
 		)
 		comboBoxAlgorithms = JComboBox<Any?>(ITEMS)
 		(comboBoxAlgorithms as JComboBox<Any?>).addActionListener(ActionListener { e: ActionEvent? -> controller.setStateOfAlgorithm() })
-		buttonList.forEach(Consumer { button: JButton? ->
-			panelButton.add(
-				button
-			)
-		})
+		buttonList.forEach(
+			Consumer { button: JButton? ->
+				panelButton.add(
+					button
+				)
+			}
+		)
 		panelButton.add(comboBoxAlgorithms)
 		add(panelButton, BorderLayout.NORTH)
 	}
@@ -91,26 +99,33 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 	private fun initButtonControlAlgorithms() {
 		val panel = JPanel()
 		val buttonList: MutableList<JButton> = ArrayList()
-		backStepButton = createButton(Constants.BACK,
+		backStepButton = createButton(
+			Constants.BACK,
 			{ e: ActionEvent? -> controller.backStep() }, buttonList, false
 		)
-		startButton = createButton(Constants.START,
+		startButton = createButton(
+			Constants.START,
 			{ e: ActionEvent? -> controller.startAlgorithm() }, buttonList, false
 		)
-		resetButton = createButton(Constants.RESET,
+		resetButton = createButton(
+			Constants.RESET,
 			{ e: ActionEvent? -> controller.resetAlgorithm() }, buttonList, false
 		)
-		finishButton = createButton(Constants.FINISH,
+		finishButton = createButton(
+			Constants.FINISH,
 			{ e: ActionEvent? -> controller.finishAlgorithm() }, buttonList, false
 		)
-		nextStepButton = createButton(Constants.NEXT,
+		nextStepButton = createButton(
+			Constants.NEXT,
 			{ e: ActionEvent? -> controller.nextStep() }, buttonList, false
 		)
-		buttonList.forEach(Consumer { button: JButton? ->
-			panel.add(
-				button
-			)
-		})
+		buttonList.forEach(
+			Consumer { button: JButton? ->
+				panel.add(
+					button
+				)
+			}
+		)
 		add(panel, BorderLayout.SOUTH)
 	}
 

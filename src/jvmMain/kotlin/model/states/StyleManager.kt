@@ -7,7 +7,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 internal object StyleManager {
-	//Установить стиль для вершин в нормальном состоянии
+	// Установить стиль для вершин в нормальном состоянии
 	fun initMyCustomVertexNormalStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val vertexStyle: MutableMap<String, Any> = Hashtable()
@@ -23,7 +23,7 @@ internal object StyleManager {
 		stylesheet.putCellStyle(Constants.MY_CUSTOM_VERTEX_NORMAL_STYLE, vertexStyle)
 	}
 
-	//Установить стиль для ребер в нормальном состоянии
+	// Установить стиль для ребер в нормальном состоянии
 	fun initMyCustomEdgeNormalStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val edgeStyle: MutableMap<String, Any> = HashMap()
@@ -43,7 +43,7 @@ internal object StyleManager {
 		stylesheet.putCellStyle(Constants.MY_CUSTOM_EDGE_NORMAL_STYLE, edgeStyle)
 	}
 
-	//Установить стиль для вершин в выделеном состоянии
+	// Установить стиль для вершин в выделеном состоянии
 	fun initMyCustomVertexSelectedStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val vertexStyle: MutableMap<String, Any> = Hashtable()
@@ -59,7 +59,7 @@ internal object StyleManager {
 		stylesheet.putCellStyle(Constants.MY_CUSTOM_VERTEX_SELECTED_STYLE, vertexStyle)
 	}
 
-	//Установить стиль для ребер в выделеном состоянии
+	// Установить стиль для ребер в выделеном состоянии
 	fun initMyCustomEdgeSelectedStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val edgeStyle: MutableMap<String, Any> = Hashtable()

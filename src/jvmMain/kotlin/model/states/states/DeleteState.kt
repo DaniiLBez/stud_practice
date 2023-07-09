@@ -3,8 +3,7 @@ package model.states.states
 import com.mxgraph.view.mxGraph
 import model.states.GraphCreatorModel
 
-
-//Описывает состояние удаление ребер и вершин
+// Описывает состояние удаление ребер и вершин
 class DeleteState(model: GraphCreatorModel) : IState {
 	private val model: GraphCreatorModel
 

@@ -1,4 +1,4 @@
-object Constants{
+object Constants {
 	const val DIJKSTRA = "Алгоритм Дейкстры"
 
 	const val WIDTH_VERTEX = 40.0

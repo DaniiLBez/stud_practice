@@ -7,7 +7,6 @@ import model.adapter.IAdapter
 import model.algorithm.ShortestWayView
 import model.states.GraphCreatorModel
 
-
 class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView, adapter: IAdapter) : IState {
 	private val model: GraphCreatorModel
 	private val view: GraphCreatorView
@@ -24,18 +23,18 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 		this.adapter = adapter
 	}
 
-	//Обработка нажатия кнопки мыши, если не выбрана не одна вершина
+	// Обработка нажатия кнопки мыши, если не выбрана не одна вершина
 	private fun handlerNormal(source: mxCell) {
 		curStatus = Status.SELECT_ONE_VERTEX
 		sourceVertex = source
-		model.setStyleSelected(true, arrayOf(sourceVertex!!))
+		model.setStyleSelected(true, mutableListOf(sourceVertex!!))
 		view.setEnabledResetButton(true)
 	}
 
-	//Обработка нажатия кнопки мыши, если выбрана одна вершина
+	// Обработка нажатия кнопки мыши, если выбрана одна вершина
 	private fun handlerSelectOneVer(target: mxCell) {
 		curStatus = Status.PROCESSING
-		model.setStyleSelected(true, arrayOf(target))
+		model.setStyleSelected(true, mutableListOf(target))
 		view.setLog("----------------------------------------------------------------------------------")
 		view.setLog("Поиск кратчайшего пути из вершины " + sourceVertex!!.value + " в вершину " + target.value + "!!!")
 		view.setLog("----------------------------------------------------------------------------------")
@@ -49,27 +48,27 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 		}
 	}
 
-	//Обработка нажатия кнопки мыши, если путь уже показан
+	// Обработка нажатия кнопки мыши, если путь уже показан
 	private fun handlerDisplay(cell: mxCell) {
 		close()
 		view.setEnabledResetButton(true)
-		model.setStyleSelected(true, arrayOf(cell))
+		model.setStyleSelected(true, mutableListOf(cell))
 		curStatus = Status.SELECT_ONE_VERTEX
 		sourceVertex = cell
 		indexStep = -1
 	}
 
-	//Показать шаг алгоритма
+	// Показать шаг алгоритма
 	private fun showMemento(viewMemento: ShortestWayView) {
 		model.setNormalStyle()
 		val currentVertex = viewMemento.getCurrentVertex()
-		val processedVertices = viewMemento.getProcessedVertices()!!
+		val processedVertices = viewMemento.getProcessedVertices()
 		val currentWays = viewMemento.getCurrentWays()
-		val inQueueVertices = viewMemento.getInQueueVertices()!!
-		val answer = viewMemento.getAnswer()!!
+		val inQueueVertices = viewMemento.getInQueueVertices()
+		val answer = viewMemento.getAnswer()
 		if (currentWays != null) model.setStyleSelected(true, currentWays)
 		if (inQueueVertices != null) model.setStyle(Constants.MY_CUSTOM_IN_QUEUE_VERTEX_STYLE, inQueueVertices)
-		if (currentVertex != null) model.setStyle(Constants.MY_CUSTOM_CURRENT_VERTEX_STYLE, arrayOf(currentVertex))
+		if (currentVertex != null) model.setStyle(Constants.MY_CUSTOM_CURRENT_VERTEX_STYLE, mutableListOf(currentVertex as mxCell))
 		if (processedVertices != null) model.setStyle(Constants.MY_CUSTOM_VERTEX_SELECTED_STYLE, processedVertices)
 		if (answer != null) model.setStyleSelected(true, answer)
 		view.setLog(viewMemento.getLog())
@@ -108,13 +107,12 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 		for (i in indexStep + 1 until stepsView!!.size - 1) {
 			view.setLog(stepsView!![i]!!.getLog())
 		}
-		indexStep = stepsView!!.size - 1
-		showMemento(stepsView!![indexStep]!!)
+		showMemento(stepsView!!.last()!!)
 	}
 
 	override fun resetAlgorithm() {
 		close()
-		curStatus =Status.NORMAL
+		curStatus = Status.NORMAL
 		sourceVertex = null
 		indexStep = -1
 	}
@@ -122,30 +120,39 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 	override fun mousePressed(posX: Double, posY: Double, cell: Any?) {
 		if (cell != null && (cell as mxCell).isVertex) {
 			val clickCell = cell
-			if (curStatus == Status.NORMAL) handlerNormal(clickCell) else if (curStatus == Status.SELECT_ONE_VERTEX) handlerSelectOneVer(
-				clickCell
-			) else if (curStatus == Status.DISPLAY) handlerDisplay(
-				clickCell
-			)
+			when (curStatus) {
+				Status.NORMAL -> handlerNormal(clickCell)
+				Status.SELECT_ONE_VERTEX -> handlerSelectOneVer(
+					clickCell
+				)
+				Status.DISPLAY -> handlerDisplay(
+					clickCell
+				)
+
+				else -> {}
+			}
 		}
 	}
 
 	override fun mouseReleased(posX: Double, posY: Double, cell: Any?) {}
-	override val status: String?
+	override val status: String
 		get() {
-			when (curStatus) {
-				Status.NORMAL -> return "Выделите вершину, из которой хотите найти кратчайших путь"
-				Status.SELECT_ONE_VERTEX -> return "Выделите конечную вершину кратчайшего пути"
-				Status.PROCESSING -> return "Обработка..."
-				Status.DISPLAY -> return if (indexStep == -1) {
-					"Нажмите старт,чтобы начать пошаговый просмотр алгоритма"
-				} else if (indexStep == stepsView!!.size - 1) {
-					stepsView!![stepsView!!.size - 1]!!.getLog()!!.split("\\n").get(0)
-				} else {
-					"Пошаговый режим включен"
+			return when (curStatus) {
+				Status.NORMAL -> "Выделите вершину, из которой хотите найти кратчайших путь"
+				Status.SELECT_ONE_VERTEX -> "Выделите конечную вершину кратчайшего пути"
+				Status.PROCESSING -> "Обработка..."
+				Status.DISPLAY -> when (indexStep) {
+					-1 -> {
+						"Нажмите старт,чтобы начать пошаговый просмотр алгоритма"
+					}
+					stepsView!!.size - 1 -> {
+						stepsView!!.last()!!.getLog()!!.split("\\n")[0]
+					}
+					else -> {
+						"Пошаговый режим включен"
+					}
 				}
 			}
-			return null
 		}
 
 	override fun close() {

@@ -4,8 +4,7 @@ import View.GraphCreatorView
 import com.mxgraph.model.mxCell
 import model.states.GraphCreatorModel
 
-
-//Описывает состояние добавления ребра
+// Описывает состояние добавления ребра
 class ConnectionVertexState(model: GraphCreatorModel, view: GraphCreatorView) : IState {
 	private val model: GraphCreatorModel
 	private val view: GraphCreatorView
@@ -16,13 +15,13 @@ class ConnectionVertexState(model: GraphCreatorModel, view: GraphCreatorView) : 
 		this.view = view
 	}
 
-	//Обработка первого нажатия
+	// Обработка первого нажатия
 	private fun handlerFirstPressed(cell: mxCell) {
 		sourceVertex = cell
-		model.setStyleSelected(true, arrayOf(sourceVertex!!))
+		model.setStyleSelected(true, mutableListOf(sourceVertex!!))
 	}
 
-	//Обработка второго нажатия
+	// Обработка второго нажатия
 	private fun handlerSecondPressed(cell: mxCell) {
 		if (model.checkExistEdge(sourceVertex, cell) == -1) {
 			val weight: String = view.showInputDialog("Добавить ребро", "Введите вес ребра")!!
@@ -31,7 +30,7 @@ class ConnectionVertexState(model: GraphCreatorModel, view: GraphCreatorView) : 
 					view.showErrorDialog("Ошибка", "Не правильный формат данных")
 				}
 			}
-			model.setStyleSelected(false, arrayOf(sourceVertex!!))
+			model.setStyleSelected(false, mutableListOf(sourceVertex!!))
 			sourceVertex = null
 		}
 	}
@@ -50,7 +49,7 @@ class ConnectionVertexState(model: GraphCreatorModel, view: GraphCreatorView) : 
 				handlerSecondPressed(clickCell)
 			}
 		} else if (sourceVertex != null) {
-			model.setStyleSelected(false, arrayOf<Any>(sourceVertex!!))
+			model.setStyleSelected(false, mutableListOf(sourceVertex!!))
 			sourceVertex = null
 		}
 	}

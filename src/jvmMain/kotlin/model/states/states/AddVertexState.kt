@@ -4,8 +4,7 @@ import Constants
 import View.GraphCreatorView
 import model.states.GraphCreatorModel
 
-
-//Описывает состояние добавления вершины
+// Описывает состояние добавления вершины
 class AddVertexState(model: GraphCreatorModel, view: GraphCreatorView) : IState {
 	private val model: GraphCreatorModel
 	private val view: GraphCreatorView

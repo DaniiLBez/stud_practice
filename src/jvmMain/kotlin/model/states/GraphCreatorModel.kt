@@ -1,7 +1,7 @@
 package model.states
 
+import com.mxgraph.model.mxCell
 import java.io.IOException
-
 
 interface GraphCreatorModel {
 	fun addVertex(name: String?, posX: Double, posY: Double, width: Double, height: Double): Boolean
@@ -9,8 +9,8 @@ interface GraphCreatorModel {
 	fun delete(cells: Array<Any>)
 	fun checkExistEdge(s: Any?, t: Any?): Int
 	fun setNormalStyle()
-	fun setStyleSelected(flag: Boolean, cells: Array<Any>)
-	fun setStyle(style: String?, cells: Array<Any>)
+	fun setStyleSelected(flag: Boolean, cells: MutableList<mxCell>?)
+	fun setStyle(style: String?, cells: MutableList<mxCell>)
 
 	@Throws(IOException::class)
 	fun saveGraph(fileName: String?)

@@ -3,7 +3,7 @@ import com.mxgraph.model.mxCell
 import com.mxgraph.view.mxGraph
 import model.states.GraphCreatorModel
 
-//Описывает состояние движения вершин
+// Описывает состояние движения вершин
 class MoveState(graphCreatorModel: GraphCreatorModel) : IState {
 	private val model: GraphCreatorModel
 	private var currentCell: mxCell? = null
@@ -22,13 +22,13 @@ class MoveState(graphCreatorModel: GraphCreatorModel) : IState {
 	override fun mousePressed(posX: Double, posY: Double, cell: Any?) {
 		if (cell != null && (cell as mxCell).isVertex) {
 			currentCell = cell
-			model.setStyleSelected(true, arrayOf<Any>(cell))
+			model.setStyleSelected(true, mutableListOf(cell))
 		}
 	}
 
 	override fun mouseReleased(posX: Double, posY: Double, cell: Any?) {
 		if (currentCell != null) {
-			model.setStyleSelected(false, arrayOf<Any>(currentCell!!))
+			model.setStyleSelected(false, mutableListOf(currentCell!!))
 			currentCell = null
 		}
 	}

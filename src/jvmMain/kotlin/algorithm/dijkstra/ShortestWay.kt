@@ -5,16 +5,15 @@ import algorithm.graph.Entry
 import algorithm.graph.WeightedDigraph
 import java.util.*
 
-
 class ShortestWay(
 	private val currentVertex: Int,
 	processedVertices: MutableList<Boolean>,
-	currentWays: MutableList<DirectedEdge>,
+	currentWays: MutableList<DirectedEdge?>,
 	inQueueVertices: PriorityQueue<Entry>?,
 	val log: MutableList<String>
 ) {
 	private val processedVertices: MutableList<Boolean>
-	private val currentWays: MutableList<DirectedEdge>
+	private val currentWays: MutableList<DirectedEdge?>
 	private val inQueueVertices: PriorityQueue<Entry>
 
 	init {

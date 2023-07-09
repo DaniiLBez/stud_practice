@@ -1,20 +1,17 @@
 package View
 
-import controller.GraphCreatorController
 import com.mxgraph.swing.mxGraphComponent
 import com.mxgraph.util.mxEvent
 import com.mxgraph.view.mxGraph
+import controller.GraphCreatorController
 import model.states.GraphCreatorModel
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 
-internal class Creator(controller: GraphCreatorController, model: GraphCreatorModel) :
-	mxGraphComponent(model.graph as mxGraph)
-{
-	private val controller: GraphCreatorController
+internal class Creator(private val controller: GraphCreatorController, model: GraphCreatorModel) :
+	mxGraphComponent(model.graph as mxGraph) {
 
 	init {
-		this.controller = controller
 		initGUI()
 		isFocusable = true
 	}
@@ -24,7 +21,8 @@ internal class Creator(controller: GraphCreatorController, model: GraphCreatorMo
 		isCenterZoom = true
 		setZoomFactor(ZOOM_FACTORY)
 		addMouseWheelListener {
-			e -> val scaled: Double = getGraph().view.scale
+				e ->
+			val scaled: Double = getGraph().view.scale
 			if (e.wheelRotation > 0 && scaled - MAX_SCALE < EPS) {
 				zoomIn()
 			} else if (e.wheelRotation < 0 && scaled - MIN_SCALE > EPS) {

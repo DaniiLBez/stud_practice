@@ -8,8 +8,7 @@ import java.awt.event.MouseEvent
 import java.io.File
 import java.io.IOException
 
-
-class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter: IAdapter): GraphCreatorController {
+class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter: IAdapter) : GraphCreatorController {
 	private var view: GraphCreatorView? = null
 	private var currentState: IState? = null
 
@@ -17,7 +16,7 @@ class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter
 		val file: File = view!!.showFileChooserDialog("Сохранить граф")!!
 		if (file != null) {
 			try {
-				model!!.saveGraph(file.absoluteFile.toString())
+				model.saveGraph(file.absoluteFile.toString())
 			} catch (e: IOException) {
 				view!!.showErrorDialog("Ошибка", "Не удалось сохраненить граф. Попробуйте еще раз!")
 			}

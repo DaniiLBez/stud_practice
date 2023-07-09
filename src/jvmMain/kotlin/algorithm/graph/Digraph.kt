@@ -1,10 +1,9 @@
 package algorithm.graph
 
-
 class Digraph(private val vertexCount: Int) {
 	private val edges = mutableListOf<MutableSet<DirectedEdge>>()
 	init {
-		(0..vertexCount).forEach {
+		(0..vertexCount).forEach { _ ->
 			edges.add(mutableSetOf())
 		}
 	}

@@ -18,12 +18,12 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 			}
 		}
 		parent = graph.getDefaultParent()
-		graph.setCellsEditable(false) //Нельзя редактировать
-		graph.setCellsResizable(false) //Нельзя изменять текст
-		graph.setDisconnectOnMove(false) //Нельзя двигать ребро
-		graph.setCellsDisconnectable(false) //Нельзя отрывать ребро от вершины
-		graph.setEdgeLabelsMovable(false) //Нельзя двигать именную метку ребра
-		graph.setKeepEdgesInBackground(true) //Ребра на заднем плане
+		graph.setCellsEditable(false) // Нельзя редактировать
+		graph.setCellsResizable(false) // Нельзя изменять текст
+		graph.setDisconnectOnMove(false) // Нельзя двигать ребро
+		graph.setCellsDisconnectable(false) // Нельзя отрывать ребро от вершины
+		graph.setEdgeLabelsMovable(false) // Нельзя двигать именную метку ребра
+		graph.setKeepEdgesInBackground(true) // Ребра на заднем плане
 		graph.setCellsSelectable(false)
 		graph.setCellsMovable(false)
 		StyleManager.initMyCustomEdgeNormalStyle(graph)
@@ -81,7 +81,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		graph.setCellStyle(Constants.MY_CUSTOM_VERTEX_NORMAL_STYLE, graph.getChildVertices(graph.defaultParent))
 	}
 
-	override fun setStyleSelected(flag: Boolean, cells: Array<Any>) {
+	override fun setStyleSelected(flag: Boolean, cells: MutableList<mxCell>?) {
 		for (c in cells!!) {
 			val cell = c as mxCell
 			if (flag) {
@@ -97,8 +97,8 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		}
 	}
 
-	override fun setStyle(style: String?, cells: Array<Any>) {
-		graph.setCellStyle(style, cells)
+	override fun setStyle(style: String?, cells: MutableList<mxCell>) {
+		graph.setCellStyle(style, cells.toTypedArray())
 	}
 
 	@Throws(IOException::class)
@@ -118,7 +118,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		}
 	}
 
-//	fun getGraph(): Any {
-//		return graph
-//	}
+// 	fun getGraph(): Any {
+// 		return graph
+// 	}
 }

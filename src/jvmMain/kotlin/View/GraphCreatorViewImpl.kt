@@ -12,17 +12,15 @@ import java.io.File
 import javax.swing.*
 import javax.swing.border.EmptyBorder
 
-class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreatorModel):
-	JFrame("Поиск кратчайшего пути в графе. Алгоритм Дейкстры."), GraphCreatorView
-{
-	private val controller: GraphCreatorController
+class GraphCreatorViewImpl(
+	private val controller: GraphCreatorController,
 	private val model: GraphCreatorModel
+) :
+	JFrame("Поиск кратчайшего пути в графе. Алгоритм Дейкстры."), GraphCreatorView {
 	private var toolBar: ToolBar? = null
 	private var textArea: JTextArea? = null
 
 	init {
-		this.controller = controller
-		this.model = model
 		initGUI()
 		controller.setView(this)
 	}
@@ -36,16 +34,16 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 		panel.layout = BorderLayout(Constants.INTEND, Constants.INTEND)
 		panel.border = EmptyBorder(Constants.INTEND, Constants.INTEND, Constants.INTEND, Constants.INTEND)
 		toolBar = ToolBar(controller)
-		toolBar!!.setPreferredSize(Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.12).toInt()))
+		toolBar!!.preferredSize = Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.12).toInt())
 		val creator = Creator(controller, model)
-		creator.setPreferredSize(Dimension((sSize.width * 0.7).toInt(), (sSize.height * 0.75).toInt()))
+		creator.preferredSize = Dimension((sSize.width * 0.7).toInt(), (sSize.height * 0.75).toInt())
 		textArea = JTextArea(100, 50)
 		textArea!!.isEnabled = false
 		textArea!!.disabledTextColor = Color.BLACK
 		val scrollPane = JScrollPane(textArea)
 		scrollPane.preferredSize = Dimension((sSize.width * 0.25).toInt(), (sSize.height * 0.75).toInt())
 		panel.add(scrollPane, BorderLayout.WEST)
-		panel.add(toolBar, BorderLayout.NORTH)
+		toolBar?.let { panel.add(it, BorderLayout.NORTH) }
 		panel.add(creator, BorderLayout.CENTER)
 		contentPane.add(panel)
 		pack()
