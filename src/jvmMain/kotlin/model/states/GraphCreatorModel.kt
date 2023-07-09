@@ -17,5 +17,5 @@ interface GraphCreatorModel {
 
 	@Throws(IOException::class, ClassNotFoundException::class)
 	fun loadGraph(fileName: String?)
-	val graph: Any?
+	val graph: Any
 }

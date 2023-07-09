@@ -60,7 +60,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		return true
 	}
 
-	override fun delete(cells: Array<Any?>?) {
+	override fun delete(cells: Array<Any>) {
 		graph.model.beginUpdate()
 		graph.removeCells(cells)
 		graph.model.endUpdate()
@@ -81,7 +81,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		graph.setCellStyle(Constants.MY_CUSTOM_VERTEX_NORMAL_STYLE, graph.getChildVertices(graph.defaultParent))
 	}
 
-	override fun setStyleSelected(flag: Boolean, cells: Array<Any?>?) {
+	override fun setStyleSelected(flag: Boolean, cells: Array<Any>) {
 		for (c in cells!!) {
 			val cell = c as mxCell
 			if (flag) {
@@ -97,7 +97,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		}
 	}
 
-	override fun setStyle(style: String?, cells: Array<Any?>?) {
+	override fun setStyle(style: String?, cells: Array<Any>) {
 		graph.setCellStyle(style, cells)
 	}
 
@@ -118,7 +118,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		}
 	}
 
-	fun getGraph(): Any {
-		return graph
-	}
+//	fun getGraph(): Any {
+//		return graph
+//	}
 }
