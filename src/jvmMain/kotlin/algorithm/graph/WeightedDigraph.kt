@@ -1,5 +1,7 @@
 package algorithm.graph
 
+import algorithm.dijkstra.MementoShortestWay
+import algorithm.dijkstra.ShortestWayAlgorithm
 import java.util.*
 
 
@@ -63,6 +65,6 @@ class WeightedDigraph(stream: String, separator: String) {
 	}
 
 	fun shortestWay(source: String, target: String, algorithm: ShortestWayAlgorithm): List<MementoShortestWay> {
-		return algorithm.buildWay(graph, index(source), index(target))
+		return algorithm.buildWay(graph!!, index(source), index(target)) ?: listOf()
 	}
 }

@@ -3,7 +3,7 @@ package algorithm.graph
 import java.util.*
 
 
-abstract class Entry : Comparable<Entry?> {
+class Entry : Comparable<Entry?> {
 	var key = 0.0
 	var value: Int
 

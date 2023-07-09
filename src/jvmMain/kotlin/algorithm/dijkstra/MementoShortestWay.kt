@@ -8,17 +8,17 @@ import java.util.*
 
 class MementoShortestWay(
 	private val currentVertex: Int,
-	processedVertices: BooleanArray,
-	currentWays: MutableList<DirectedEdge?>,
+	processedVertices: MutableList<Boolean>,
+	currentWays: MutableList<DirectedEdge>,
 	inQueueVertices: PriorityQueue<Entry>?,
-	val log: Array<String>
+	val log: MutableList<String>
 ) {
-	private val processedVertices: BooleanArray
-	private val currentWays: MutableList<DirectedEdge?>
+	private val processedVertices: MutableList<Boolean>
+	private val currentWays: MutableList<DirectedEdge>
 	private val inQueueVertices: PriorityQueue<Entry>
 
 	init {
-		this.processedVertices = processedVertices.clone()
+		this.processedVertices = processedVertices
 		this.currentWays = currentWays
 		this.inQueueVertices = PriorityQueue(inQueueVertices)
 	}
@@ -55,7 +55,7 @@ class MementoShortestWay(
 	fun getInQueueVertices(digraph: WeightedDigraph, separator: String?): String {
 		return buildString {
 			inQueueVertices.forEach {
-				append(digraph.name(it.value))
+				append(digraph.name(it.value)).append(separator).append("\n")
 			}
 		}
 	}
@@ -63,10 +63,10 @@ class MementoShortestWay(
 	override fun toString(): String {
 		return "MementoShortestWay{" +
 			"currentVertex=" + currentVertex +
-			", processedVertices=" + Arrays.toString(processedVertices) +
+			", processedVertices=" + processedVertices.toString() +
 			", currentWays=" + currentWays.toString() +
 			", inQueueVertices=" + inQueueVertices +
-			", log=" + Arrays.toString(log) +
+			", log=" + log.toString() +
 			'}'
 	}
 }
