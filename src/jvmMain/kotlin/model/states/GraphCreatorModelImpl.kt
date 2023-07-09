@@ -5,6 +5,7 @@ import com.mxgraph.model.mxCell
 import com.mxgraph.view.mxGraph
 import java.io.*
 
+@Suppress("UNCHECKED_CAST")
 class GraphCreatorModelImpl : GraphCreatorModel {
 	override val graph: mxGraph
 	private val parent: Any

@@ -5,7 +5,6 @@ import model.adapter.IAdapter
 import model.states.GraphCreatorModel
 import model.states.states.*
 import java.awt.event.MouseEvent
-import java.io.File
 import java.io.IOException
 
 class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter: IAdapter) : GraphCreatorController {
