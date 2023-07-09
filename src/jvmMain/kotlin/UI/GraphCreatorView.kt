@@ -1,4 +1,4 @@
-package View
+package UI
 
 import java.io.File
 
@@ -13,5 +13,4 @@ interface GraphCreatorView {
 	fun showErrorDialog(title: String?, message: String?)
 	fun showInputDialog(title: String?, message: String?): String?
 	fun showFileChooserDialog(title: String?): File?
-	val selectAlgorithm: String?
 }

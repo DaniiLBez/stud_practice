@@ -1,6 +1,6 @@
 package model.states.states
 
-import View.GraphCreatorView
+import UI.GraphCreatorView
 import com.mxgraph.model.mxCell
 import model.states.GraphCreatorModel
 

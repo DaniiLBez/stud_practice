@@ -1,7 +1,7 @@
 package model.states.states
 
 import Constants
-import View.GraphCreatorView
+import UI.GraphCreatorView
 import model.states.GraphCreatorModel
 
 // Описывает состояние добавления вершины

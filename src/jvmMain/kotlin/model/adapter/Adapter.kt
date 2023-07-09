@@ -104,7 +104,7 @@ class Adapter : IAdapter {
 			val sourceStr = (s as mxCell).value as String
 			val targetStr = (t as mxCell).value as String
 			when (alg) {
-				Constants.DIJKSTRA -> {
+				"Алгоритм Дейкстры" -> {
 					algorithm = Dijkstra()
 					mementosView =
 						convertToView(gr, digraph, digraph.shortestWay(sourceStr, targetStr, algorithm))

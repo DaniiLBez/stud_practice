@@ -20,7 +20,7 @@ internal object StyleManager {
 		vertexStyle[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD
 		vertexStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE
 		vertexStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-		stylesheet.putCellStyle(Constants.MY_CUSTOM_VERTEX_NORMAL_STYLE, vertexStyle)
+		stylesheet.putCellStyle(Constants.VERTEX_NORMAL_STYLE, vertexStyle)
 	}
 
 	// Установить стиль для ребер в нормальном состоянии
@@ -40,7 +40,7 @@ internal object StyleManager {
 		edgeStyle[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD
 		edgeStyle[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = Constants.FILL_COLOR_NORMAL
 		edgeStyle[mxConstants.STYLE_LABEL_BORDERCOLOR] = Constants.STROKE_COLOR_NORMAL
-		stylesheet.putCellStyle(Constants.MY_CUSTOM_EDGE_NORMAL_STYLE, edgeStyle)
+		stylesheet.putCellStyle(Constants.EDGE_NORMAL_STYLE, edgeStyle)
 	}
 
 	// Установить стиль для вершин в выделеном состоянии
@@ -56,7 +56,7 @@ internal object StyleManager {
 		vertexStyle[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD
 		vertexStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE
 		vertexStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-		stylesheet.putCellStyle(Constants.MY_CUSTOM_VERTEX_SELECTED_STYLE, vertexStyle)
+		stylesheet.putCellStyle(Constants.VERTEX_SELECTED_STYLE, vertexStyle)
 	}
 
 	// Установить стиль для ребер в выделеном состоянии
@@ -77,7 +77,7 @@ internal object StyleManager {
 		edgeStyle[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = Constants.FILL_COLOR_SELECTED
 		edgeStyle[mxConstants.STYLE_LABEL_BORDERCOLOR] = Constants.STROKE_COLOR_SELECTED
 		edgeStyle[mxConstants.STYLE_VERTICAL_LABEL_POSITION] = mxConstants.ALIGN_BOTTOM
-		stylesheet.putCellStyle(Constants.MY_CUSTOM_EDGE_SELECTED_STYLE, edgeStyle)
+		stylesheet.putCellStyle(Constants.EDGE_SELECTED_STYLE, edgeStyle)
 	}
 
 	fun initMyCustomCurrentVertexStyle(graph: mxGraph) {
@@ -92,7 +92,7 @@ internal object StyleManager {
 		vertexStyle[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD
 		vertexStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE
 		vertexStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-		stylesheet.putCellStyle(Constants.MY_CUSTOM_CURRENT_VERTEX_STYLE, vertexStyle)
+		stylesheet.putCellStyle(Constants.CURRENT_VERTEX_STYLE, vertexStyle)
 	}
 
 	fun initMyCustomInQueueVertexStyle(graph: mxGraph) {
@@ -107,6 +107,6 @@ internal object StyleManager {
 		vertexStyle[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD
 		vertexStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE
 		vertexStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-		stylesheet.putCellStyle(Constants.MY_CUSTOM_IN_QUEUE_VERTEX_STYLE, vertexStyle)
+		stylesheet.putCellStyle(Constants.QUEUE_VERTEX_STYLE, vertexStyle)
 	}
 }

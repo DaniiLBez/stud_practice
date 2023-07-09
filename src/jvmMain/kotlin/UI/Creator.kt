@@ -1,4 +1,4 @@
-package View
+package UI
 
 import com.mxgraph.swing.mxGraphComponent
 import com.mxgraph.util.mxEvent

@@ -1,26 +1,25 @@
-package View
+package UI
 
 import Constants
-import com.company.view.ToolBar
 import controller.GraphCreatorController
 import model.states.GraphCreatorModel
-import java.awt.BorderLayout
-import java.awt.Color
-import java.awt.Dimension
-import java.awt.Toolkit
+import java.awt.*
 import java.io.File
 import javax.swing.*
 import javax.swing.border.EmptyBorder
 
-class GraphCreatorViewImpl(
-	private val controller: GraphCreatorController,
+class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreatorModel):
+	JFrame("Поиск кратчайшего пути в графе. Алгоритм Дейкстры."), GraphCreatorView
+{
+	private val controller: GraphCreatorController
 	private val model: GraphCreatorModel
-) :
-	JFrame("Поиск кратчайшего пути в графе. Алгоритм Дейкстры."), GraphCreatorView {
-	private var toolBar: ToolBar? = null
+	private var topBar: TopAppBar? = null
+	private var bottomBar: BottomAppBar? = null
 	private var textArea: JTextArea? = null
 
 	init {
+		this.controller = controller
+		this.model = model
 		initGUI()
 		controller.setView(this)
 	}
@@ -30,48 +29,65 @@ class GraphCreatorViewImpl(
 		setSize(sSize.width, sSize.height)
 		isResizable = false
 		setLocationRelativeTo(null)
+
 		val panel = JPanel()
 		panel.layout = BorderLayout(Constants.INTEND, Constants.INTEND)
 		panel.border = EmptyBorder(Constants.INTEND, Constants.INTEND, Constants.INTEND, Constants.INTEND)
-		toolBar = ToolBar(controller)
-		toolBar!!.preferredSize = Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.12).toInt())
+		panel.background = Color(250, 234, 255)
+
+		topBar = TopAppBar(controller)
+		topBar!!.preferredSize = Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.1).toInt())
+
+
+		bottomBar = BottomAppBar(controller)
+		bottomBar!!.preferredSize = Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.1).toInt())
+
 		val creator = Creator(controller, model)
 		creator.preferredSize = Dimension((sSize.width * 0.7).toInt(), (sSize.height * 0.75).toInt())
+		creator.border = BorderFactory.createLineBorder(Color(190, 160, 255), 3)
+		creator.background = Color.WHITE
+
 		textArea = JTextArea(100, 50)
 		textArea!!.isEnabled = false
 		textArea!!.disabledTextColor = Color.BLACK
+		textArea!!.font = Font("Roboto", Font.TRUETYPE_FONT, 12)
+
 		val scrollPane = JScrollPane(textArea)
 		scrollPane.preferredSize = Dimension((sSize.width * 0.25).toInt(), (sSize.height * 0.75).toInt())
-		panel.add(scrollPane, BorderLayout.WEST)
-		toolBar?.let { panel.add(it, BorderLayout.NORTH) }
-		panel.add(creator, BorderLayout.CENTER)
+		scrollPane.border = BorderFactory.createLineBorder(Color(190, 160, 255), 3)
+
+
+		panel.add(scrollPane, BorderLayout.CENTER)
+		panel.add(topBar, BorderLayout.NORTH)
+		panel.add(creator, BorderLayout.WEST)
+		panel.add(bottomBar, BorderLayout.SOUTH)
 		contentPane.add(panel)
 		pack()
 		isVisible = true
 	}
 
 	override fun setEnabledStartButton(show: Boolean) {
-		toolBar!!.setEnabledStartButton(show)
+		bottomBar!!.setEnabledStartButton(show)
 	}
 
 	override fun setEnabledFinishButton(show: Boolean) {
-		toolBar!!.setEnabledFinishButton(show)
+		bottomBar!!.setEnabledFinishButton(show)
 	}
 
 	override fun setEnabledNextButton(show: Boolean) {
-		toolBar!!.setEnabledNextButton(show)
+		bottomBar!!.setEnabledNextButton(show)
 	}
 
 	override fun setEnabledBackButton(show: Boolean) {
-		toolBar!!.setEnabledBackButton(show)
+		bottomBar!!.setEnabledBackButton(show)
 	}
 
 	override fun setEnabledResetButton(show: Boolean) {
-		toolBar!!.setEnabledResetButton(show)
+		bottomBar!!.setEnabledResetButton(show)
 	}
 
 	override fun setLabelHelp(strHelp: String?) {
-		toolBar!!.setLabelHelp(strHelp)
+		topBar!!.setLabelHelp(strHelp)
 	}
 
 	override fun setLog(message: String?) {
@@ -92,7 +108,8 @@ class GraphCreatorViewImpl(
 		return if (ret == JFileChooser.APPROVE_OPTION) fileOpen.selectedFile else null
 	}
 
-	override val selectAlgorithm: String
-		get() = toolBar!!.selectAlgorithm!!
 
+	fun getToolBar(): TopAppBar? {
+		return topBar
+	}
 }

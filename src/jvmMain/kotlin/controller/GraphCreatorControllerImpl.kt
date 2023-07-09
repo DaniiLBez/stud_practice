@@ -1,6 +1,6 @@
 package controller
 
-import View.GraphCreatorView
+import UI.GraphCreatorView
 import model.adapter.IAdapter
 import model.states.GraphCreatorModel
 import model.states.states.*
