@@ -1,7 +1,7 @@
 package model.states.states
 
 import Constants
-import View.GraphCreatorView
+import UI.GraphCreatorView
 import com.mxgraph.model.mxCell
 import model.adapter.IAdapter
 import model.algorithm.ShortestWayView
@@ -39,7 +39,7 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 		view.setLog("Поиск кратчайшего пути из вершины " + sourceVertex!!.value + " в вершину " + target.value + "!!!")
 		view.setLog("----------------------------------------------------------------------------------")
 		adapter.shortestWay(
-			view.selectAlgorithm, model.graph, sourceVertex, target
+			"Алгоритм Дейкстры", model.graph, sourceVertex, target
 		) { mementosView ->
 			stepsView = mementosView
 			curStatus = Status.DISPLAY
@@ -67,9 +67,9 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 		val inQueueVertices = viewMemento.getInQueueVertices()
 		val answer = viewMemento.getAnswer()
 		if (currentWays != null) model.setStyleSelected(true, currentWays)
-		if (inQueueVertices != null) model.setStyle(Constants.MY_CUSTOM_IN_QUEUE_VERTEX_STYLE, inQueueVertices)
-		if (currentVertex != null) model.setStyle(Constants.MY_CUSTOM_CURRENT_VERTEX_STYLE, mutableListOf(currentVertex as mxCell))
-		if (processedVertices != null) model.setStyle(Constants.MY_CUSTOM_VERTEX_SELECTED_STYLE, processedVertices)
+		if (inQueueVertices != null) model.setStyle(Constants.QUEUE_VERTEX_STYLE, inQueueVertices)
+		if (currentVertex != null) model.setStyle(Constants.CURRENT_VERTEX_STYLE, mutableListOf(currentVertex as mxCell))
+		if (processedVertices != null) model.setStyle(Constants.VERTEX_SELECTED_STYLE, processedVertices)
 		if (answer != null) model.setStyleSelected(true, answer)
 		view.setLog(viewMemento.getLog())
 	}
