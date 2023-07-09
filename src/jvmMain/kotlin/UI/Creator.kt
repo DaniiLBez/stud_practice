@@ -1,4 +1,4 @@
-package View
+package UI
 
 import controller.GraphCreatorController
 import com.mxgraph.swing.mxGraphComponent

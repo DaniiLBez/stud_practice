@@ -1,28 +1,25 @@
-package com.company.view
+package UI
 
 import Constants
 import controller.GraphCreatorController
 import java.awt.BorderLayout
 import java.awt.Color
+import java.awt.Font
 import java.awt.GridBagLayout
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.util.function.Consumer
+import javax.swing.BorderFactory
 import javax.swing.JButton
 import javax.swing.JComboBox
 import javax.swing.JLabel
 import javax.swing.JPanel
 
-class ToolBar(controller: GraphCreatorController) : JPanel() {
+class TopAppBar(controller: GraphCreatorController) : JPanel() {
 	private val controller: GraphCreatorController
-	private var comboBoxAlgorithms: JComboBox<*>? = null
+	private var boxSaveLoad: JComboBox<*>? = null
 	var labelHelp: JLabel? = null
 		private set
-	private var backStepButton: JButton? = null
-	private var nextStepButton: JButton? = null
-	private var startButton: JButton? = null
-	private var finishButton: JButton? = null
-	private var resetButton: JButton? = null
 	var moveButton: JButton? = null
 		private set
 	var addVertexButton: JButton? = null
@@ -32,6 +29,8 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 	var deleteButton: JButton? = null
 		private set
 
+	var dijkstraButton: JButton? = null
+
 	init {
 		this.controller = controller
 		initGUI()
@@ -39,14 +38,25 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 
 	private fun initGUI() {
 		layout = BorderLayout()
+		background = Color(190, 160, 255)
 		initButtons()
 		initLabelHelp()
-		initButtonControlAlgorithms()
 	}
 
 	private fun initButtons() {
 		val panelButton = JPanel()
+		panelButton.background = Color(190, 160, 255)
 		val buttonList: MutableList<JButton> = ArrayList()
+		boxSaveLoad = JComboBox<Any?>(SaveLoad)
+		(boxSaveLoad as JComboBox<Any?>)
+			.addActionListener(
+				ActionListener {
+					e: ActionEvent? -> controller.saveGraph()
+				}
+			)
+		(boxSaveLoad as JComboBox<Any?>).background = Color.WHITE
+		(boxSaveLoad as JComboBox<Any?>).border = BorderFactory.createLineBorder(Color(78, 0, 102), 2, true)
+
 		createButton(Constants.SAVE,
 			{ e: ActionEvent? -> controller.saveGraph() }, buttonList, true
 		)
@@ -65,53 +75,30 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 		deleteButton = createButton(Constants.DELETE,
 			{ e: ActionEvent? -> controller.setStateOfDelete() }, buttonList, true
 		)
-		comboBoxAlgorithms = JComboBox<Any?>(ITEMS)
-		(comboBoxAlgorithms as JComboBox<Any?>).addActionListener(ActionListener { e: ActionEvent? -> controller.setStateOfAlgorithm() })
+		dijkstraButton = createButton("Алгоритм Дейкстры",
+			{ e: ActionEvent? -> controller.setStateOfAlgorithm() }, buttonList, true
+		)
+
+		panelButton.add(boxSaveLoad)
 		buttonList.forEach(Consumer { button: JButton? ->
 			panelButton.add(
 				button
 			)
 		})
-		panelButton.add(comboBoxAlgorithms)
 		add(panelButton, BorderLayout.NORTH)
 	}
 
 	private fun initLabelHelp() {
 		val panelLabel = JPanel()
 		panelLabel.layout = GridBagLayout()
-		panelLabel.background = Color(222, 239, 216)
+		panelLabel.background = Color(223, 208, 255)
 		labelHelp = JLabel()
 		labelHelp!!.horizontalAlignment = JLabel.CENTER
 		labelHelp!!.verticalAlignment = JLabel.CENTER
-		labelHelp!!.foreground = Color(106, 119, 61)
+		labelHelp!!.foreground = Color.BLACK
+		labelHelp!!.font = Font("Roboto", Font.BOLD, 13)
 		panelLabel.add(labelHelp)
 		add(panelLabel, BorderLayout.CENTER)
-	}
-
-	private fun initButtonControlAlgorithms() {
-		val panel = JPanel()
-		val buttonList: MutableList<JButton> = ArrayList()
-		backStepButton = createButton(Constants.BACK,
-			{ e: ActionEvent? -> controller.backStep() }, buttonList, false
-		)
-		startButton = createButton(Constants.START,
-			{ e: ActionEvent? -> controller.startAlgorithm() }, buttonList, false
-		)
-		resetButton = createButton(Constants.RESET,
-			{ e: ActionEvent? -> controller.resetAlgorithm() }, buttonList, false
-		)
-		finishButton = createButton(Constants.FINISH,
-			{ e: ActionEvent? -> controller.finishAlgorithm() }, buttonList, false
-		)
-		nextStepButton = createButton(Constants.NEXT,
-			{ e: ActionEvent? -> controller.nextStep() }, buttonList, false
-		)
-		buttonList.forEach(Consumer { button: JButton? ->
-			panel.add(
-				button
-			)
-		})
-		add(panel, BorderLayout.SOUTH)
 	}
 
 	private fun createButton(
@@ -121,6 +108,8 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 		enabled: Boolean
 	): JButton {
 		val button = JButton(name)
+		button.border = BorderFactory.createLineBorder(Color(78, 0, 102), 2, true)
+		button.background = Color.WHITE
 		button.addActionListener(listener)
 		button.isEnabled = enabled
 		container.add(button)
@@ -131,30 +120,8 @@ class ToolBar(controller: GraphCreatorController) : JPanel() {
 		labelHelp!!.text = text
 	}
 
-	fun setEnabledNextButton(show: Boolean) {
-		nextStepButton!!.isEnabled = show
-	}
-
-	fun setEnabledBackButton(show: Boolean) {
-		backStepButton!!.isEnabled = show
-	}
-
-	fun setEnabledStartButton(show: Boolean) {
-		startButton!!.isEnabled = show
-	}
-
-	fun setEnabledFinishButton(show: Boolean) {
-		finishButton!!.isEnabled = show
-	}
-
-	fun setEnabledResetButton(show: Boolean) {
-		resetButton!!.isEnabled = show
-	}
-
-	val selectAlgorithm: String?
-		get() = if (comboBoxAlgorithms!!.selectedItem != null) comboBoxAlgorithms!!.selectedItem.toString() else null
-
 	companion object {
-		private val ITEMS = arrayOf<String?>(Constants.DIJKSTRA)
+		private val SaveLoad = arrayOf<String?>("Меню","Загрузить граф", "Сохранить Граф")
+		private val AddVertexEdges = arrayOf<String?>("Добавить","Добавить вершину", "Добавить ребро")
 	}
 }

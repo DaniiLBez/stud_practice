@@ -42,7 +42,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		if (name!!.length > Constants.MAX_SIZE_VERTEX_NAME)
 			myName = name.substring(0, Constants.MAX_SIZE_VERTEX_NAME) + "..."
 		graph.model.beginUpdate()
-		graph.insertVertex(parent, null, myName, posX, posY, width, height, Constants.MY_CUSTOM_VERTEX_NORMAL_STYLE)
+		graph.insertVertex(parent, null, myName, posX, posY, width, height, Constants.VERTEX_NORMAL_STYLE)
 		graph.model.endUpdate()
 		return true
 	}
@@ -52,7 +52,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 			val w = weight!!.toDouble()
 			if (w < 0) return false
 			graph.model.beginUpdate()
-			graph.insertEdge(parent, null, weight, v1, v2, Constants.MY_CUSTOM_EDGE_NORMAL_STYLE)
+			graph.insertEdge(parent, null, weight, v1, v2, Constants.EDGE_NORMAL_STYLE)
 			graph.model.endUpdate()
 		} catch (e: NumberFormatException) {
 			return false
@@ -77,8 +77,8 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 	}
 
 	override fun setNormalStyle() {
-		graph.setCellStyle(Constants.MY_CUSTOM_EDGE_NORMAL_STYLE, graph.getChildEdges(graph.defaultParent))
-		graph.setCellStyle(Constants.MY_CUSTOM_VERTEX_NORMAL_STYLE, graph.getChildVertices(graph.defaultParent))
+		graph.setCellStyle(Constants.EDGE_NORMAL_STYLE, graph.getChildEdges(graph.defaultParent))
+		graph.setCellStyle(Constants.VERTEX_NORMAL_STYLE, graph.getChildVertices(graph.defaultParent))
 	}
 
 	override fun setStyleSelected(flag: Boolean, cells: Array<Any>) {
@@ -86,13 +86,13 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 			val cell = c as mxCell
 			if (flag) {
 				if (cell.isVertex) {
-					graph.setCellStyle(Constants.MY_CUSTOM_VERTEX_SELECTED_STYLE, arrayOf<Any>(cell))
-				} else if (cell.isEdge) graph.setCellStyle(Constants.MY_CUSTOM_EDGE_SELECTED_STYLE, arrayOf<Any>(cell))
+					graph.setCellStyle(Constants.VERTEX_SELECTED_STYLE, arrayOf<Any>(cell))
+				} else if (cell.isEdge) graph.setCellStyle(Constants.EDGE_SELECTED_STYLE, arrayOf<Any>(cell))
 			} else {
 				if (cell.isVertex) graph.setCellStyle(
-					Constants.MY_CUSTOM_VERTEX_NORMAL_STYLE,
+					Constants.VERTEX_NORMAL_STYLE,
 					arrayOf<Any>(cell)
-				) else if (cell.isEdge) graph.setCellStyle(Constants.MY_CUSTOM_EDGE_NORMAL_STYLE, arrayOf<Any>(cell))
+				) else if (cell.isEdge) graph.setCellStyle(Constants.EDGE_NORMAL_STYLE, arrayOf<Any>(cell))
 			}
 		}
 	}
