@@ -1,4 +1,4 @@
-object Constants{
+object Constants {
 	const val WIDTH_VERTEX = 40.0
 	const val HEIGHT_VERTEX = 40.0
 	const val MAX_SIZE_VERTEX_NAME = 15

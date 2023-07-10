@@ -3,14 +3,14 @@ package model.states.states
 import Constants
 import UI.GraphCreatorView
 import com.mxgraph.model.mxCell
-import model.adapter.IAdapter
+import model.adapter.Adapter
 import model.algorithm.ShortestWayView
 import model.states.GraphCreatorModel
 
-class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView, adapter: IAdapter) : IState {
+class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView, adapter: Adapter) : IState {
 	private val model: GraphCreatorModel
 	private val view: GraphCreatorView
-	private val adapter: IAdapter
+	private val adapter: Adapter
 	private var stepsView: List<ShortestWayView?>? = null
 	private var curStatus: Status =
 		Status.NORMAL

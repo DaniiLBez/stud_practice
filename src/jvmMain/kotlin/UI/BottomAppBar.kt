@@ -7,7 +7,6 @@ import java.awt.Color
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.util.function.Consumer
-import javax.swing.BorderFactory
 import javax.swing.ImageIcon
 import javax.swing.JButton
 import javax.swing.JPanel
@@ -37,27 +36,34 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 		val panel = JPanel()
 		panel.background = Color(190, 160, 255)
 		val buttonList: MutableList<JButton> = ArrayList()
-		backStepButton = createButton(Constants.BACK,
+		backStepButton = createButton(
+			Constants.BACK,
 			{ e: ActionEvent? -> controller.backStep() }, buttonList, false
 		)
-		startButton = createButton(Constants.START,
+		startButton = createButton(
+			Constants.START,
 			{ e: ActionEvent? -> controller.startAlgorithm() }, buttonList, false
 		)
-		finishButton = createButton(Constants.FINISH,
+		finishButton = createButton(
+			Constants.FINISH,
 			{ e: ActionEvent? -> controller.finishAlgorithm() }, buttonList, false
 		)
-		nextStepButton = createButton(Constants.NEXT,
+		nextStepButton = createButton(
+			Constants.NEXT,
 			{ e: ActionEvent? -> controller.nextStep() }, buttonList, false
 		)
-		resetButton = createButton(Constants.RESET,
+		resetButton = createButton(
+			Constants.RESET,
 			{ e: ActionEvent? -> controller.resetAlgorithm() }, buttonList, false
 		)
 
-		buttonList.forEach(Consumer { button: JButton? ->
-			panel.add(
-				button
-			)
-		})
+		buttonList.forEach(
+			Consumer { button: JButton? ->
+				panel.add(
+					button
+				)
+			}
+		)
 		add(panel, BorderLayout.NORTH)
 	}
 
@@ -66,15 +72,18 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 		panel.background = Color(190, 160, 255)
 		val buttonList: MutableList<JButton> = ArrayList()
 
-		ranAlgorithm = createRanButton("Алгоритм Дейкстры",
+		ranAlgorithm = createRanButton(
+			"Алгоритм Дейкстры",
 			{ e: ActionEvent? -> controller.setStateOfAlgorithm() }, buttonList, true
 		)
 
-		buttonList.forEach(Consumer { button: JButton? ->
-			panel.add(
-				button
-			)
-		})
+		buttonList.forEach(
+			Consumer { button: JButton? ->
+				panel.add(
+					button
+				)
+			}
+		)
 
 		add(panel, BorderLayout.CENTER)
 	}
@@ -84,8 +93,7 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 		listener: ActionListener,
 		container: MutableList<JButton>,
 		enabled: Boolean
-	): JButton
-	{
+	): JButton {
 		val imageOfIcon = ImageIcon(name)
 		val button = JButton()
 		button.icon = imageOfIcon
@@ -101,8 +109,7 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 		listener: ActionListener,
 		container: MutableList<JButton>,
 		enabled: Boolean
-	): JButton
-	{
+	): JButton {
 		val imageOfIcon = ImageIcon("images/ran.png")
 		val button = JButton("Запустить алгоритм")
 		button.icon = imageOfIcon

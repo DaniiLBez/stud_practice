@@ -3,7 +3,6 @@ package model.adapter
 import Constants
 import algorithm.dijkstra.Dijkstra
 import algorithm.dijkstra.ShortestWay
-import algorithm.dijkstra.ShortestWayAlgorithm
 import algorithm.graph.WeightedDigraph
 import com.mxgraph.model.mxCell
 import com.mxgraph.view.mxGraph
@@ -11,7 +10,7 @@ import model.algorithm.ShortestWayView
 import java.util.*
 import java.util.function.Consumer
 
-class Adapter : IAdapter {
+class Adapter {
 	private fun convertFromMxGraphToGraph(graph: mxGraph): String {
 		val vertex: MutableSet<String> = HashSet()
 		val sb = StringBuilder()
@@ -96,11 +95,11 @@ class Adapter : IAdapter {
 		return mementosView
 	}
 
-	override fun shortestWay(alg: String?, gr: Any?, s: Any?, t: Any?, callbackEnd: Consumer<List<ShortestWayView>>) {
+	fun shortestWay(alg: String?, gr: Any?, s: Any?, t: Any?, callbackEnd: Consumer<List<ShortestWayView>>) {
 		Thread {
 			val digraph = WeightedDigraph(convertFromMxGraphToGraph(gr as mxGraph), Constants.SEPARATOR)
 			var mementosView = mutableListOf<ShortestWayView>()
-			var algorithm: ShortestWayAlgorithm? = null
+			var algorithm: Dijkstra? = null
 			val sourceStr = (s as mxCell).value as String
 			val targetStr = (t as mxCell).value as String
 			when (alg) {
@@ -113,7 +112,7 @@ class Adapter : IAdapter {
 			if (algorithm != null) {
 				val sb = StringBuilder()
 				val partPath = StringBuilder()
-				var path = StringBuilder()
+				var path = mutableListOf<String>()
 				var pathWeight = 0.0
 				val log: String
 				val answer: MutableList<mxCell>?
@@ -133,27 +132,30 @@ class Adapter : IAdapter {
 							.append(": ")
 							.append(e.weight)
 							.append("\n")
-						if (path.indexOf(digraph.name(e.to)) != -1) {
-							path
-								.append(digraph.name(e.from))
-								.append(">-")
+						if (path.contains(digraph.name(e.to))) {
+							path.add(digraph.name(e.from))
+							path.add("->")
+							pathWeight += e.weight
+						} else {
+							path.add(digraph.name(e.to))
+							path.add("->")
+							path.add(digraph.name(e.from))
+							path.add("->")
 							pathWeight += e.weight
 						}
-						else {
-							path
-								.append(digraph.name(e.to))
-								.append(">-")
-								.append(digraph.name(e.from))
-								.append(">-")
-							pathWeight += e.weight
-						}
-
 					}
-					path.setLength(path.length-2)
+					path.removeAt(path.size - 1)
 					path.reverse()
-					path.append("=")
-					path.append(pathWeight)
-					log = "Путь из вершины $sourceStr в вершину $targetStr найден \n$partPath$path"
+					path.add("=")
+					path.add(pathWeight.toString())
+
+					val logPath = buildString {
+						path.forEach {
+							append(it)
+						}
+					}
+
+					log = "Путь из вершины $sourceStr в вершину $targetStr найден \n$partPath$logPath"
 					answer = convertFromGraphToMxGraph(gr, sb.toString())
 				} else {
 					answer = null

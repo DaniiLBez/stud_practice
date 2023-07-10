@@ -5,27 +5,27 @@ import algorithm.graph.DirectedEdge
 import algorithm.graph.Entry
 import java.util.*
 
-class Dijkstra : ShortestWayAlgorithm {
+class Dijkstra {
 	private var edgeTo = mutableListOf<DirectedEdge?>()
 	private var distTo = mutableListOf<Double>()
 	private var visitedVertex = mutableListOf<Boolean>()
 	private val priorityQueue = PriorityQueue<Entry>()
 	private var steps = mutableListOf<ShortestWay>()
 
-	fun relax(graph: Digraph, vertex: Int) {
+	private fun relaxation(graph: Digraph, vertex: Int) {
 		steps.add(
 			ShortestWay(
 				vertex,
 				visitedVertex,
 				edgeTo,
 				priorityQueue,
-				mutableListOf("Выбрана текущая вершина: $vertex")
+				mutableListOf("Обрабатываемая вершина: ${visitedVertex[vertex]}")
 			)
 		)
 		graph.getEdgesForVertex(vertex).forEach {
 			val vertexTo = it.to
 			if (distTo[vertexTo] > (distTo[vertex] + it.weight)) {
-				val log = "Была произведена релаксация, метка вершины $vertexTo была изменена с " + distTo[vertexTo].toString() + " на " + (distTo[vertex] + it.weight).toString()
+				val log = "Произведена релаксация!\nМетка вершины $vertexTo была изменена с " + distTo[vertexTo].toString() + " на " + (distTo[vertex] + it.weight).toString()
 				distTo[vertexTo] = distTo[vertex] + it.weight
 				edgeTo[vertexTo] = it
 				if (priorityQueue.contains(Entry(vertexTo))) {
@@ -59,19 +59,19 @@ class Dijkstra : ShortestWayAlgorithm {
 				visitedVertex,
 				edgeTo,
 				priorityQueue,
-				mutableListOf("Обработка вершины $vertex была закончена")
+				mutableListOf("Вершина $vertex обработана")
 			)
 		)
 	}
 
-	override fun buildWay(g: Digraph, source: Int, target: Int): MutableList<ShortestWay> {
-		(0..g.getVertexCount()).forEach {
+	fun buildWay(graph: Digraph, source: Int, target: Int): MutableList<ShortestWay> {
+		(0..graph.getVertexCount()).forEach { _ ->
 			distTo.add(Double.MAX_VALUE)
 		}
-		edgeTo = mutableListOf(*arrayOfNulls(g.getVertexCount()))
+		edgeTo = mutableListOf(*arrayOfNulls(graph.getVertexCount()))
 		distTo[source] = 0.0
 		priorityQueue.offer(Entry(distTo[source], source))
-		visitedVertex = MutableList(g.getVertexCount()) { false }
+		visitedVertex = MutableList(graph.getVertexCount()) { false }
 		steps.add(
 			ShortestWay(
 				-1,
@@ -82,17 +82,17 @@ class Dijkstra : ShortestWayAlgorithm {
 			)
 		)
 		while (priorityQueue.isNotEmpty()) {
-			relax(g, priorityQueue.poll().value)
+			relaxation(graph, priorityQueue.poll().value)
 		}
 
 		return steps
 	}
 
-	override fun hasPathTo(v: Int): Boolean {
+	fun hasPathTo(v: Int): Boolean {
 		return distTo[v] < Double.MAX_VALUE
 	}
 
-	override fun pathTo(v: Int): Iterable<DirectedEdge>? {
+	fun pathTo(v: Int): Iterable<DirectedEdge>? {
 		if (!hasPathTo(v)) return null
 		val path = Stack<DirectedEdge>()
 		var e = edgeTo[v]

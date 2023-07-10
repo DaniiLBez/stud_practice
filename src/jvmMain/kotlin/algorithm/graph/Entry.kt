@@ -3,7 +3,7 @@ package algorithm.graph
 import java.util.*
 
 class Entry : Comparable<Entry?> {
-	var key = 0.0
+	private var key = 0.0
 	var value: Int
 
 	constructor(key: Double, value: Int) {

@@ -1,7 +1,7 @@
 package algorithm.graph
 
+import algorithm.dijkstra.Dijkstra
 import algorithm.dijkstra.ShortestWay
-import algorithm.dijkstra.ShortestWayAlgorithm
 import java.util.*
 
 class WeightedDigraph(stream: String, separator: String) {
@@ -11,10 +11,10 @@ class WeightedDigraph(stream: String, separator: String) {
 	init {
 		val graphStringRepresentation = prepareGraphStringRepresentation(stream, separator)
 		val graphSize = graphStringRepresentation.stream().map { obj: List<String> -> obj.size }
-			.reduce { a: Int, b: Int ->
+			.reduce { firstSize: Int, secondSize: Int ->
 				Integer.sum(
-					a,
-					b
+					firstSize,
+					secondSize
 				)
 			}.orElse(0)
 		buildGraphFromStringRepresentation(graphStringRepresentation, graphSize)
@@ -64,7 +64,7 @@ class WeightedDigraph(stream: String, separator: String) {
 			.get()
 	}
 
-	fun shortestWay(source: String, target: String, algorithm: ShortestWayAlgorithm): List<ShortestWay> {
+	fun shortestWay(source: String, target: String, algorithm: Dijkstra): List<ShortestWay> {
 		return algorithm.buildWay(graph!!, index(source), index(target)) ?: listOf()
 	}
 }

@@ -6,8 +6,8 @@ import com.mxgraph.view.mxGraph
 import java.io.*
 
 @Suppress("UNCHECKED_CAST")
-class GraphCreatorModelImpl : GraphCreatorModel {
-	override val graph: mxGraph
+class GraphCreatorModel {
+	val graph: mxGraph
 	private val parent: Any
 
 	init {
@@ -35,7 +35,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		StyleManager.initMyCustomInQueueVertexStyle(graph)
 	}
 
-	override fun addVertex(name: String?, posX: Double, posY: Double, width: Double, height: Double): Boolean {
+	fun addVertex(name: String?, posX: Double, posY: Double, width: Double, height: Double): Boolean {
 		var myName = name
 		for (v in graph.getChildVertices(parent)) {
 			if ((v as mxCell).value == myName) return false
@@ -48,7 +48,7 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		return true
 	}
 
-	override fun addEdge(weight: String?, vertex1: Any?, vertex2: Any?): Boolean {
+	fun addEdge(weight: String?, vertex1: Any?, vertex2: Any?): Boolean {
 		try {
 			val w = weight!!.toDouble()
 			if (w < 0) return false
@@ -61,13 +61,13 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		return true
 	}
 
-	override fun delete(cells: Array<Any>) {
+	fun delete(cells: Array<Any>) {
 		graph.model.beginUpdate()
 		graph.removeCells(cells)
 		graph.model.endUpdate()
 	}
 
-	override fun checkExistEdge(s: Any?, t: Any?): Int {
+	fun checkExistEdge(s: Any?, t: Any?): Int {
 		val sourceVertex = s as mxCell
 		val targetVertex = t as mxCell
 		for (i in 0 until sourceVertex.edgeCount) {
@@ -77,12 +77,12 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		return -1
 	}
 
-	override fun setNormalStyle() {
+	fun setNormalStyle() {
 		graph.setCellStyle(Constants.EDGE_NORMAL_STYLE, graph.getChildEdges(graph.defaultParent))
 		graph.setCellStyle(Constants.VERTEX_NORMAL_STYLE, graph.getChildVertices(graph.defaultParent))
 	}
 
-	override fun setStyleSelected(flag: Boolean, cells: MutableList<mxCell>?) {
+	fun setStyleSelected(flag: Boolean, cells: MutableList<mxCell>?) {
 		for (c in cells!!) {
 			if (flag) {
 				if (c.isVertex) {
@@ -97,12 +97,12 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 		}
 	}
 
-	override fun setStyle(style: String?, cells: MutableList<mxCell>) {
+	fun setStyle(style: String?, cells: MutableList<mxCell>) {
 		graph.setCellStyle(style, cells.toTypedArray())
 	}
 
 	@Throws(IOException::class)
-	override fun saveGraph(fileName: String?) {
+	fun saveGraph(fileName: String?) {
 		ObjectOutputStream(fileName?.let { FileOutputStream(it) }).use { outputStream ->
 			outputStream.writeObject(
 				graph.getChildCells(parent)
@@ -111,14 +111,10 @@ class GraphCreatorModelImpl : GraphCreatorModel {
 	}
 
 	@Throws(IOException::class, ClassNotFoundException::class)
-	override fun loadGraph(fileName: String?) {
+	fun loadGraph(fileName: String?) {
 		ObjectInputStream(fileName?.let { FileInputStream(it) }).use { inputStream ->
 			graph.removeCells(graph.getChildCells(parent))
 			graph.addCells(inputStream.readObject() as Array<Any?>)
 		}
 	}
-
-// 	fun getGraph(): Any {
-// 		return graph
-// 	}
 }

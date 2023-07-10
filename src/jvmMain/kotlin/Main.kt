@@ -1,10 +1,10 @@
 import UI.GraphCreatorViewImpl
-import controller.GraphCreatorImpl
+import controller.GraphCreatorController
 import model.adapter.Adapter
-import model.states.GraphCreatorModelImpl
+import model.states.GraphCreatorModel
 
 fun main() {
-	val graphCreatorModel = GraphCreatorModelImpl()
-	val graphCreatorController = GraphCreatorImpl(graphCreatorModel, Adapter())
+	val graphCreatorModel = GraphCreatorModel()
+	val graphCreatorController = GraphCreatorController(graphCreatorModel, Adapter())
 	GraphCreatorViewImpl(graphCreatorController, graphCreatorModel)
 }

@@ -8,9 +8,8 @@ import java.io.File
 import javax.swing.*
 import javax.swing.border.EmptyBorder
 
-class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreatorModel):
-	JFrame("Поиск кратчайшего пути в графе. Алгоритм Дейкстры."), GraphCreatorView
-{
+class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreatorModel) :
+	JFrame("Поиск кратчайшего пути в графе. Алгоритм Дейкстры."), GraphCreatorView {
 	private val controller: GraphCreatorController
 	private val model: GraphCreatorModel
 	private var topBar: TopAppBar? = null
@@ -37,7 +36,6 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 		topBar = TopAppBar(controller)
 		topBar!!.preferredSize = Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.1).toInt())
 
-
 		bottomBar = BottomAppBar(controller)
 		bottomBar!!.preferredSize = Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.1).toInt())
 
@@ -54,7 +52,6 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 		val scrollPane = JScrollPane(textArea)
 		scrollPane.preferredSize = Dimension((sSize.width * 0.25).toInt(), (sSize.height * 0.75).toInt())
 		scrollPane.border = BorderFactory.createLineBorder(Color(190, 160, 255), 3)
-
 
 		panel.add(scrollPane, BorderLayout.CENTER)
 		panel.add(topBar, BorderLayout.NORTH)
@@ -105,10 +102,5 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 		val fileOpen = JFileChooser()
 		val ret = fileOpen.showDialog(null, title)
 		return if (ret == JFileChooser.APPROVE_OPTION) fileOpen.selectedFile else null
-	}
-
-
-	fun getToolBar(): TopAppBar? {
-		return topBar
 	}
 }

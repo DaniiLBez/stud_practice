@@ -1,17 +1,17 @@
 package controller
 
-import UI.GraphCreatorView
-import model.adapter.IAdapter
+import UI.GraphCreatorViewImpl
+import model.adapter.Adapter
 import model.states.GraphCreatorModel
 import model.states.states.*
 import java.awt.event.MouseEvent
 import java.io.IOException
 
-class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter: IAdapter) : GraphCreatorController {
-	private var view: GraphCreatorView? = null
+class GraphCreatorController(private var model: GraphCreatorModel, private var adapter: Adapter) {
+	private var view: GraphCreatorViewImpl? = null
 	private var currentState: IState? = null
 
-	override fun saveGraph() {
+	fun saveGraph() {
 		val file = view!!.showFileChooserDialog("Сохранить граф")
 		if (file != null) {
 			try {
@@ -22,7 +22,7 @@ class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter
 		}
 	}
 
-	override fun loadGraph() {
+	fun loadGraph() {
 		val file = view!!.showFileChooserDialog("Загрузить граф")
 		if (file != null) {
 			try {
@@ -33,31 +33,31 @@ class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter
 		}
 	}
 
-	override fun setStateOfMotion() {
+	fun setStateOfMotion() {
 		currentState!!.close()
 		currentState = MoveState(model)
 		view!!.setLabelHelp((currentState as MoveState).status)
 	}
 
-	override fun setStateAddingVertices() {
+	fun setStateAddingVertices() {
 		currentState!!.close()
 		currentState = AddVertexState(model, view!!)
 		view!!.setLabelHelp((currentState as AddVertexState).status)
 	}
 
-	override fun setStateOfConnectionVerticies() {
+	fun setStateOfConnectionVerticies() {
 		currentState!!.close()
 		currentState = ConnectionVertexState(model, view!!)
 		view!!.setLabelHelp((currentState as ConnectionVertexState).status)
 	}
 
-	override fun setStateOfDelete() {
+	fun setStateOfDelete() {
 		currentState!!.close()
 		currentState = DeleteState(model)
 		view!!.setLabelHelp((currentState as DeleteState).status)
 	}
 
-	override fun setStateOfAlgorithm() {
+	fun setStateOfAlgorithm() {
 		currentState!!.close()
 		if (currentState !is AlgorithmShortestWayState) {
 			currentState = AlgorithmShortestWayState(model, view!!, adapter)
@@ -65,37 +65,37 @@ class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter
 		view!!.setLabelHelp(currentState!!.status)
 	}
 
-	override fun nextStep() {
+	fun nextStep() {
 		currentState!!.nextStep()
 		view!!.setLabelHelp(currentState!!.status)
 	}
 
-	override fun backStep() {
+	fun backStep() {
 		currentState!!.backStep()
 		view!!.setLabelHelp(currentState!!.status)
 	}
 
-	override fun startAlgorithm() {
+	fun startAlgorithm() {
 		currentState!!.startAlgorithm()
 		view!!.setLabelHelp(currentState!!.status)
 	}
 
-	override fun finishAlgorithm() {
+	fun finishAlgorithm() {
 		currentState!!.finishAlgorithm()
 		view!!.setLabelHelp(currentState!!.status)
 	}
 
-	override fun resetAlgorithm() {
+	fun resetAlgorithm() {
 		currentState!!.resetAlgorithm()
 		view!!.setLabelHelp(currentState!!.status)
 	}
 
-	override fun mousePressed(e: MouseEvent?, cell: Any?) {
+	fun mousePressed(e: MouseEvent?, cell: Any?) {
 		currentState!!.mousePressed(e!!.x.toDouble(), e.y.toDouble(), cell)
 		view!!.setLabelHelp(currentState!!.status)
 	}
 
-	override fun mouseReleased(e: MouseEvent?, cell: Any?) {
+	fun mouseReleased(e: MouseEvent?, cell: Any?) {
 		if (e != null) currentState!!.mouseReleased(e.x.toDouble(), e.y.toDouble(), cell) else currentState!!.mouseReleased(
 			-1.0,
 			-1.0,
@@ -104,7 +104,7 @@ class GraphCreatorImpl(private var model: GraphCreatorModel, private var adapter
 		view!!.setLabelHelp(currentState!!.status)
 	}
 
-	override fun setView(view: GraphCreatorView?) {
+	fun setView(view: GraphCreatorViewImpl?) {
 		this.view = view
 		currentState = AddVertexState(model, view!!)
 		view.setLabelHelp(currentState!!.status)
