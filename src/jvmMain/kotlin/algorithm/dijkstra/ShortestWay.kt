@@ -1,5 +1,6 @@
 package algorithm.dijkstra
 
+import Constants
 import algorithm.graph.DirectedEdge
 import algorithm.graph.Entry
 import algorithm.graph.WeightedDigraph
@@ -41,9 +42,9 @@ class ShortestWay(
 		for (edge in currentWays) {
 			if (edge != null) {
 				stringBuilder.append(digraph.name(edge.from))
-					.append(separator)
+					.append(Constants.SEPARATOR)
 					.append(digraph.name(edge.to))
-					.append(separator)
+					.append(Constants.SEPARATOR)
 					.append(edge.weight)
 					.append("\n")
 			}

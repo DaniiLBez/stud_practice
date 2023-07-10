@@ -112,17 +112,48 @@ class Adapter : IAdapter {
 			}
 			if (algorithm != null) {
 				val sb = StringBuilder()
+				val partPath = StringBuilder()
+				var path = StringBuilder()
+				var pathWeight = 0.0
 				val log: String
 				val answer: MutableList<mxCell>?
 				if (algorithm.hasPathTo(digraph.index(targetStr))) {
 					for (e in algorithm.pathTo(digraph.index(targetStr))!!) {
-						sb.append(digraph.name(e!!.from))
+						sb
+							.append(digraph.name(e!!.from))
 							.append(Constants.SEPARATOR)
 							.append(digraph.name(e.to))
-							.append(Constants.SEPARATOR).append(e.weight)
+							.append(Constants.SEPARATOR)
+							.append(e.weight)
 							.append("\n")
+						partPath
+							.append(digraph.name(e!!.from))
+							.append("->")
+							.append(digraph.name(e.to))
+							.append(": ")
+							.append(e.weight)
+							.append("\n")
+						if (path.indexOf(digraph.name(e.to)) != -1) {
+							path
+								.append(digraph.name(e.from))
+								.append(">-")
+							pathWeight += e.weight
+						}
+						else {
+							path
+								.append(digraph.name(e.to))
+								.append(">-")
+								.append(digraph.name(e.from))
+								.append(">-")
+							pathWeight += e.weight
+						}
+
 					}
-					log = "Путь из вершины $sourceStr в вершину $targetStr найден \n$sb"
+					path.setLength(path.length-2)
+					path.reverse()
+					path.append("=")
+					path.append(pathWeight)
+					log = "Путь из вершины $sourceStr в вершину $targetStr найден \n$partPath$path"
 					answer = convertFromGraphToMxGraph(gr, sb.toString())
 				} else {
 					answer = null

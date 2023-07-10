@@ -35,9 +35,9 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 	private fun handlerSelectOneVer(target: mxCell) {
 		curStatus = Status.PROCESSING
 		model.setStyleSelected(true, mutableListOf(target))
-		view.setLog("----------------------------------------------------------------------------------")
-		view.setLog("Поиск кратчайшего пути из вершины " + sourceVertex!!.value + " в вершину " + target.value + "!!!")
-		view.setLog("----------------------------------------------------------------------------------")
+		view.setLog("_____________________________________________________________________________")
+		view.setLog("Поиск кратчайшего пути из вершины " + sourceVertex!!.value + " в вершину " + target.value)
+		view.setLog("_____________________________________________________________________________")
 		adapter.shortestWay(
 			"Алгоритм Дейкстры", model.graph, sourceVertex, target
 		) { mementosView ->
