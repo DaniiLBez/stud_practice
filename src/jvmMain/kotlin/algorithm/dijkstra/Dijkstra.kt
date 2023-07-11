@@ -1,34 +1,36 @@
 package algorithm.dijkstra
 
-import algorithm.graph.Digraph
+import algorithm.graph.GraphModel
 import algorithm.graph.DirectedEdge
-import algorithm.graph.Entry
+import algorithm.graph.Vertexes
+import algorithm.graph.WeightedGraphModel
 import java.util.*
 
-class Dijkstra {
+class Dijkstra(graphModel: WeightedGraphModel) {
 	private var edgeTo = mutableListOf<DirectedEdge?>()
 	private var distTo = mutableListOf<Double>()
 	private var visitedVertex = mutableListOf<Boolean>()
-	private val priorityQueue = PriorityQueue<Entry>()
-	private var steps = mutableListOf<ShortestWay>()
+	private val priorityQueue = PriorityQueue<Vertexes>()
+	private var steps = mutableListOf<ShortestPath>()
+	private val digraph = graphModel
+	private fun relaxation(graph: GraphModel, vertex: Int) {
 
-	private fun relaxation(graph: Digraph, vertex: Int) {
 		steps.add(
-			ShortestWay(
+			ShortestPath(
 				vertex,
 				visitedVertex,
 				edgeTo,
 				priorityQueue,
-				mutableListOf("Обрабатываемая вершина: ${visitedVertex[vertex]}")
+				mutableListOf("Обрабатываемая вершина: ${digraph.name(vertex)}")
 			)
 		)
 		graph.getEdgesForVertex(vertex).forEach {
 			val vertexTo = it.to
 			if (distTo[vertexTo] > (distTo[vertex] + it.weight)) {
-				val log = "Произведена релаксация!\nМетка вершины $vertexTo была изменена с " + distTo[vertexTo].toString() + " на " + (distTo[vertex] + it.weight).toString()
+				val log = "Произведена релаксация!\nМетка вершины ${digraph.name(vertexTo)} была изменена с " + distTo[vertexTo].toString() + " на " + (distTo[vertex] + it.weight).toString()
 				distTo[vertexTo] = distTo[vertex] + it.weight
 				edgeTo[vertexTo] = it
-				if (priorityQueue.contains(Entry(vertexTo))) {
+				if (priorityQueue.contains(Vertexes(vertexTo))) {
 					val iterator = priorityQueue.iterator()
 					while (iterator.hasNext()) {
 						val currentElement = iterator.next()
@@ -37,12 +39,12 @@ class Dijkstra {
 							break
 						}
 					}
-					priorityQueue.offer(Entry(distTo[vertexTo], vertexTo))
+					priorityQueue.offer(Vertexes(distTo[vertexTo], vertexTo))
 				} else {
-					priorityQueue.offer(Entry(distTo[vertexTo], vertexTo))
+					priorityQueue.offer(Vertexes(distTo[vertexTo], vertexTo))
 				}
 				steps.add(
-					ShortestWay(
+					ShortestPath(
 						vertex,
 						visitedVertex,
 						edgeTo,
@@ -54,31 +56,31 @@ class Dijkstra {
 		}
 		visitedVertex[vertex] = true
 		steps.add(
-			ShortestWay(
+			ShortestPath(
 				-1,
 				visitedVertex,
 				edgeTo,
 				priorityQueue,
-				mutableListOf("Вершина $vertex обработана")
+				mutableListOf("Вершина ${digraph.name(vertex)} обработана")
 			)
 		)
 	}
 
-	fun buildWay(graph: Digraph, source: Int, target: Int): MutableList<ShortestWay> {
+	fun buildWay(graph: GraphModel, source: Int): MutableList<ShortestPath> {
 		(0..graph.getVertexCount()).forEach { _ ->
 			distTo.add(Double.MAX_VALUE)
 		}
 		edgeTo = mutableListOf(*arrayOfNulls(graph.getVertexCount()))
 		distTo[source] = 0.0
-		priorityQueue.offer(Entry(distTo[source], source))
+		priorityQueue.offer(Vertexes(distTo[source], source))
 		visitedVertex = MutableList(graph.getVertexCount()) { false }
 		steps.add(
-			ShortestWay(
+			ShortestPath(
 				-1,
 				visitedVertex,
 				edgeTo,
 				priorityQueue,
-				mutableListOf("Начальное состояние алгоритма. В очереди только вершина $source")
+				mutableListOf("Начальное состояние алгоритма. В очереди только вершина ${digraph.name(source)}")
 			)
 		)
 		while (priorityQueue.isNotEmpty()) {
@@ -95,10 +97,10 @@ class Dijkstra {
 	fun pathTo(v: Int): Iterable<DirectedEdge>? {
 		if (!hasPathTo(v)) return null
 		val path = Stack<DirectedEdge>()
-		var e = edgeTo[v]
-		while (e != null) {
-			path.push(e)
-			e = edgeTo[e.from]
+		var edges = edgeTo[v]
+		while (edges != null) {
+			path.push(edges)
+			edges = edgeTo[edges.from]
 		}
 		return path
 	}

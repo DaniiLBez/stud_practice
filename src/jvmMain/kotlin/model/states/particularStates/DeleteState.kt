@@ -1,11 +1,10 @@
-package model.states.states
+package model.states.particularStates
 
 import com.mxgraph.view.mxGraph
-import model.states.GraphCreatorModel
-
+import model.states.CreationAreaModel
 // Описывает состояние удаление ребер и вершин
-class DeleteState(model: GraphCreatorModel) : IState {
-	private val model: GraphCreatorModel
+class DeleteState(model: CreationAreaModel) : IState {
+	private val model: CreationAreaModel
 
 	init {
 		this.model = model
@@ -19,7 +18,7 @@ class DeleteState(model: GraphCreatorModel) : IState {
 	override fun mousePressed(posX: Double, posY: Double, cell: Any?) {
 		if (cell != null) {
 			val cells = arrayOf(cell)
-			model.delete((model.graph as mxGraph).getAllEdges(cells))
+			model.delete(model.graph.getAllEdges(cells))
 			model.delete(cells)
 		}
 	}

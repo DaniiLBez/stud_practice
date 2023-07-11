@@ -2,7 +2,7 @@ package algorithm.graph
 
 import java.util.*
 
-class Entry : Comparable<Entry?> {
+class Vertexes : Comparable<Vertexes?> {
 	private var key = 0.0
 	var value: Int
 
@@ -15,14 +15,14 @@ class Entry : Comparable<Entry?> {
 		this.value = value
 	}
 
-	override operator fun compareTo(other: Entry?): Int {
+	override operator fun compareTo(other: Vertexes?): Int {
 		return key.compareTo(other!!.key)
 	}
 
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
 		if (other == null || javaClass != other.javaClass) return false
-		val entry = other as Entry
+		val entry = other as Vertexes
 		return value == entry.value
 	}
 

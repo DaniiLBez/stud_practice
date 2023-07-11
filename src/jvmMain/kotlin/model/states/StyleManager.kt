@@ -7,8 +7,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 internal object StyleManager {
-	// Установить стиль для вершин в нормальном состоянии
-	fun initMyCustomVertexNormalStyle(graph: mxGraph) {
+	fun customVertexNormalStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val vertexStyle: MutableMap<String, Any> = Hashtable()
 		vertexStyle[mxConstants.STYLE_FILLCOLOR] = Constants.FILL_COLOR_NORMAL
@@ -23,8 +22,7 @@ internal object StyleManager {
 		stylesheet.putCellStyle(Constants.VERTEX_NORMAL_STYLE, vertexStyle)
 	}
 
-	// Установить стиль для ребер в нормальном состоянии
-	fun initMyCustomEdgeNormalStyle(graph: mxGraph) {
+	fun customEdgeNormalStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val edgeStyle: MutableMap<String, Any> = HashMap()
 		edgeStyle[mxConstants.STYLE_ROUNDED] = true
@@ -43,8 +41,7 @@ internal object StyleManager {
 		stylesheet.putCellStyle(Constants.EDGE_NORMAL_STYLE, edgeStyle)
 	}
 
-	// Установить стиль для вершин в выделеном состоянии
-	fun initMyCustomVertexSelectedStyle(graph: mxGraph) {
+	fun customVertexSelectedStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val vertexStyle: MutableMap<String, Any> = Hashtable()
 		vertexStyle[mxConstants.STYLE_FILLCOLOR] = Constants.FILL_COLOR_SELECTED
@@ -59,8 +56,7 @@ internal object StyleManager {
 		stylesheet.putCellStyle(Constants.VERTEX_SELECTED_STYLE, vertexStyle)
 	}
 
-	// Установить стиль для ребер в выделеном состоянии
-	fun initMyCustomEdgeSelectedStyle(graph: mxGraph) {
+	fun customEdgeSelectedStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val edgeStyle: MutableMap<String, Any> = Hashtable()
 		edgeStyle[mxConstants.STYLE_ROUNDED] = true
@@ -80,7 +76,7 @@ internal object StyleManager {
 		stylesheet.putCellStyle(Constants.EDGE_SELECTED_STYLE, edgeStyle)
 	}
 
-	fun initMyCustomCurrentVertexStyle(graph: mxGraph) {
+	fun customCurrentVertexStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val vertexStyle: MutableMap<String, Any> = Hashtable()
 		vertexStyle[mxConstants.STYLE_FILLCOLOR] = Constants.FILL_COLOR_CURRENT
@@ -95,7 +91,7 @@ internal object StyleManager {
 		stylesheet.putCellStyle(Constants.CURRENT_VERTEX_STYLE, vertexStyle)
 	}
 
-	fun initMyCustomInQueueVertexStyle(graph: mxGraph) {
+	fun customInQueueVertexStyle(graph: mxGraph) {
 		val stylesheet = graph.stylesheet
 		val vertexStyle: MutableMap<String, Any> = Hashtable()
 		vertexStyle[mxConstants.STYLE_FILLCOLOR] = Constants.FILL_COLOR_NORMAL

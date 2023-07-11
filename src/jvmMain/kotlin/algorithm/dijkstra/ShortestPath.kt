@@ -2,20 +2,20 @@ package algorithm.dijkstra
 
 import Constants
 import algorithm.graph.DirectedEdge
-import algorithm.graph.Entry
-import algorithm.graph.WeightedDigraph
+import algorithm.graph.Vertexes
+import algorithm.graph.WeightedGraphModel
 import java.util.*
 
-class ShortestWay(
+class ShortestPath(
 	private val currentVertex: Int,
 	processedVertices: MutableList<Boolean>,
 	currentWays: MutableList<DirectedEdge?>,
-	inQueueVertices: PriorityQueue<Entry>?,
+	inQueueVertices: PriorityQueue<Vertexes>?,
 	val log: MutableList<String>
 ) {
 	private val processedVertices: MutableList<Boolean>
 	private val currentWays: MutableList<DirectedEdge?>
-	private val inQueueVertices: PriorityQueue<Entry>
+	private val inQueueVertices: PriorityQueue<Vertexes>
 
 	init {
 		this.processedVertices = processedVertices.toMutableList()
@@ -23,11 +23,11 @@ class ShortestWay(
 		this.inQueueVertices = PriorityQueue(inQueueVertices)
 	}
 
-	fun getCurrentVertex(digraph: WeightedDigraph, separator: String): String {
+	fun getCurrentVertex(digraph: WeightedGraphModel, separator: String): String {
 		return if (currentVertex != -1) digraph.name(currentVertex) + separator + "\n" else ""
 	}
 
-	fun getProcessedVertices(digraph: WeightedDigraph, separator: String?): String {
+	fun getProcessedVertices(digraph: WeightedGraphModel, separator: String?): String {
 		val stringBuilder = StringBuilder()
 		for (i in processedVertices.indices) {
 			if (processedVertices[i]) {
@@ -37,7 +37,7 @@ class ShortestWay(
 		return stringBuilder.toString()
 	}
 
-	fun getCurrentWays(digraph: WeightedDigraph, separator: String?): String {
+	fun getCurrentWays(digraph: WeightedGraphModel): String {
 		val stringBuilder = StringBuilder()
 		for (edge in currentWays) {
 			if (edge != null) {
@@ -52,7 +52,7 @@ class ShortestWay(
 		return stringBuilder.toString()
 	}
 
-	fun getInQueueVertices(digraph: WeightedDigraph, separator: String?): String {
+	fun getInQueueVertices(digraph: WeightedGraphModel, separator: String?): String {
 		return buildString {
 			inQueueVertices.forEach {
 				append(digraph.name(it.value)).append(separator).append("\n")

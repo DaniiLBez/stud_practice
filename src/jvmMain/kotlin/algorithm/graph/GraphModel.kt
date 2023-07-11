@@ -1,6 +1,6 @@
 package algorithm.graph
 
-class Digraph(private val vertexCount: Int) {
+class GraphModel(private val vertexCount: Int) {
 	private val edges = mutableListOf<MutableSet<DirectedEdge>>()
 	init {
 		(0..vertexCount).forEach { _ ->

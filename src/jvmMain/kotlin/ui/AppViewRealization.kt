@@ -1,20 +1,21 @@
-package UI
+package ui
 
 import Constants
-import controller.GraphCreatorController
-import model.states.GraphCreatorModel
+import controller.CreationAreaController
+import model.states.CreationAreaModel
 import java.awt.*
 import java.io.File
 import javax.swing.*
 import javax.swing.border.EmptyBorder
 
-class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreatorModel) :
-	JFrame("Поиск кратчайшего пути в графе. Алгоритм Дейкстры."), GraphCreatorView {
-	private val controller: GraphCreatorController
-	private val model: GraphCreatorModel
+class AppViewRealization(controller: CreationAreaController, model: CreationAreaModel) :
+	AppView {
+	private val controller: CreationAreaController
+	private val model: CreationAreaModel
 	private var topBar: TopAppBar? = null
 	private var bottomBar: BottomAppBar? = null
 	private var textArea: JTextArea? = null
+	private val frame = JFrame("Поиск кратчайшего пути в графе. Алгоритм Дейсктры.")
 
 	init {
 		this.controller = controller
@@ -24,9 +25,10 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 	}
 
 	private fun initGUI() {
+		frame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
 		val sSize = Toolkit.getDefaultToolkit().screenSize
-		setSize(sSize.width, sSize.height)
-		setLocationRelativeTo(null)
+		frame.setSize(sSize.width, sSize.height)
+		frame.setLocationRelativeTo(null)
 
 		val panel = JPanel()
 		panel.layout = BorderLayout(Constants.INTEND, Constants.INTEND)
@@ -39,7 +41,7 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 		bottomBar = BottomAppBar(controller)
 		bottomBar!!.preferredSize = Dimension((sSize.width * 0.95).toInt(), (sSize.height * 0.1).toInt())
 
-		val creator = Creator(controller, model)
+		val creator = CreationArea(controller, model)
 		creator.preferredSize = Dimension((sSize.width * 0.7).toInt(), (sSize.height * 0.75).toInt())
 		creator.border = BorderFactory.createLineBorder(Color(190, 160, 255), 3)
 		creator.background = Color.WHITE
@@ -54,12 +56,12 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 		scrollPane.border = BorderFactory.createLineBorder(Color(190, 160, 255), 3)
 
 		panel.add(scrollPane, BorderLayout.CENTER)
-		panel.add(topBar, BorderLayout.NORTH)
+		topBar?.let { panel.add(it, BorderLayout.NORTH) }
 		panel.add(creator, BorderLayout.WEST)
-		panel.add(bottomBar, BorderLayout.SOUTH)
-		contentPane.add(panel)
-		pack()
-		isVisible = true
+		bottomBar?.let { panel.add(it, BorderLayout.SOUTH) }
+		frame.contentPane.add(panel)
+		frame.pack()
+		frame.isVisible = true
 	}
 
 	override fun setEnabledStartButton(show: Boolean) {
@@ -91,11 +93,11 @@ class GraphCreatorViewImpl(controller: GraphCreatorController, model: GraphCreat
 	}
 
 	override fun showErrorDialog(title: String?, message: String?) {
-		JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE)
+		JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE)
 	}
 
 	override fun showInputDialog(title: String?, message: String?): String? {
-		return JOptionPane.showInputDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE)
+		return JOptionPane.showInputDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE)
 	}
 
 	override fun showFileChooserDialog(title: String?): File? {

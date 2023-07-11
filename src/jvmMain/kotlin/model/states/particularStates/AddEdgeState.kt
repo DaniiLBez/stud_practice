@@ -1,13 +1,12 @@
-package model.states.states
+package model.states.particularStates
 
-import UI.GraphCreatorView
 import com.mxgraph.model.mxCell
-import model.states.GraphCreatorModel
+import model.states.CreationAreaModel
+import ui.AppView
 
-// Описывает состояние добавления ребра
-class ConnectionVertexState(model: GraphCreatorModel, view: GraphCreatorView) : IState {
-	private val model: GraphCreatorModel
-	private val view: GraphCreatorView
+class AddEdgeState(model: CreationAreaModel, view: AppView) : IState {
+	private val model: CreationAreaModel
+	private val view: AppView
 	private var sourceVertex: mxCell? = null
 
 	init {

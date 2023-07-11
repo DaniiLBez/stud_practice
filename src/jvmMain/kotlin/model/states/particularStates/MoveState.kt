@@ -1,17 +1,15 @@
-package model.states.states
+package model.states.particularStates
 import com.mxgraph.model.mxCell
-import com.mxgraph.view.mxGraph
-import model.states.GraphCreatorModel
+import model.states.CreationAreaModel
 
-// Описывает состояние движения вершин
-class MoveState(graphCreatorModel: GraphCreatorModel) : IState {
-	private val model: GraphCreatorModel
+class MoveState(graphCreatorModel: CreationAreaModel) : IState {
+	private val model: CreationAreaModel
 	private var currentCell: mxCell? = null
 
 	init {
 		model = graphCreatorModel
-		(model.graph as mxGraph).isCellsSelectable = true
-		(model.graph as mxGraph).isCellsMovable = true
+		model.graph.isCellsSelectable = true
+		model.graph.isCellsMovable = true
 	}
 
 	override fun nextStep() {}
@@ -37,8 +35,8 @@ class MoveState(graphCreatorModel: GraphCreatorModel) : IState {
 		get() = if (currentCell == null) "Выделите и перемещайте объекты" else "Перемещайте курсор для перемещения объекта"
 
 	override fun close() {
-		(model.graph as mxGraph).isCellsSelectable = false
-		(model.graph as mxGraph).isCellsMovable = false
+		model.graph.isCellsSelectable = false
+		model.graph.isCellsMovable = false
 		model.setNormalStyle()
 	}
 }

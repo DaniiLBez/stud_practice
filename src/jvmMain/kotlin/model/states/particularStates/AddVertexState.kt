@@ -1,13 +1,12 @@
-package model.states.states
+package model.states.particularStates
 
 import Constants
-import UI.GraphCreatorView
-import model.states.GraphCreatorModel
+import model.states.CreationAreaModel
+import ui.AppView
 
-// Описывает состояние добавления вершины
-class AddVertexState(model: GraphCreatorModel, view: GraphCreatorView) : IState {
-	private val model: GraphCreatorModel
-	private val view: GraphCreatorView
+class AddVertexState(model: CreationAreaModel, view: AppView) : IState {
+	private val model: CreationAreaModel
+	private val view: AppView
 
 	init {
 		this.model = model

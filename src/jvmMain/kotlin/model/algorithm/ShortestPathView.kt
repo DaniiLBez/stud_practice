@@ -2,7 +2,7 @@ package model.algorithm
 
 import com.mxgraph.model.mxCell
 
-class ShortestWayView(
+class ShortestPathView(
 	private val currentVertex: Any?,
 	private val processedVertices: MutableList<mxCell>?,
 	private val currentWays: MutableList<mxCell>?,

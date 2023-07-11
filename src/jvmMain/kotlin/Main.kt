@@ -1,10 +1,10 @@
-import UI.GraphCreatorViewImpl
-import controller.GraphCreatorController
+import ui.AppViewRealization
+import controller.CreationAreaController
 import model.adapter.Adapter
-import model.states.GraphCreatorModel
+import model.states.CreationAreaModel
 
 fun main() {
-	val graphCreatorModel = GraphCreatorModel()
-	val graphCreatorController = GraphCreatorController(graphCreatorModel, Adapter())
-	GraphCreatorViewImpl(graphCreatorController, graphCreatorModel)
+	val creationAreaModel = CreationAreaModel()
+	val creationAreaController = CreationAreaController(creationAreaModel, Adapter())
+	AppViewRealization(creationAreaController, creationAreaModel)
 }

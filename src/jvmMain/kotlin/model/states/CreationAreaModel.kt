@@ -6,7 +6,7 @@ import com.mxgraph.view.mxGraph
 import java.io.*
 
 @Suppress("UNCHECKED_CAST")
-class GraphCreatorModel {
+class CreationAreaModel {
 	val graph: mxGraph
 	private val parent: Any
 
@@ -19,20 +19,20 @@ class GraphCreatorModel {
 			}
 		}
 		parent = graph.getDefaultParent()
-		graph.setCellsEditable(false) // Нельзя редактировать
-		graph.setCellsResizable(false) // Нельзя изменять текст
-		graph.setDisconnectOnMove(false) // Нельзя двигать ребро
-		graph.setCellsDisconnectable(false) // Нельзя отрывать ребро от вершины
-		graph.setEdgeLabelsMovable(false) // Нельзя двигать именную метку ребра
-		graph.setKeepEdgesInBackground(true) // Ребра на заднем плане
+		graph.setCellsEditable(false)
+		graph.setCellsResizable(false)
+		graph.setDisconnectOnMove(false)
+		graph.setCellsDisconnectable(false)
+		graph.setEdgeLabelsMovable(false)
+		graph.setKeepEdgesInBackground(true)
 		graph.setCellsSelectable(false)
 		graph.setCellsMovable(false)
-		StyleManager.initMyCustomEdgeNormalStyle(graph)
-		StyleManager.initMyCustomEdgeSelectedStyle(graph)
-		StyleManager.initMyCustomVertexNormalStyle(graph)
-		StyleManager.initMyCustomVertexSelectedStyle(graph)
-		StyleManager.initMyCustomCurrentVertexStyle(graph)
-		StyleManager.initMyCustomInQueueVertexStyle(graph)
+		StyleManager.customEdgeNormalStyle(graph)
+		StyleManager.customEdgeSelectedStyle(graph)
+		StyleManager.customVertexNormalStyle(graph)
+		StyleManager.customVertexSelectedStyle(graph)
+		StyleManager.customCurrentVertexStyle(graph)
+		StyleManager.customInQueueVertexStyle(graph)
 	}
 
 	fun addVertex(name: String?, posX: Double, posY: Double, width: Double, height: Double): Boolean {
@@ -48,14 +48,14 @@ class GraphCreatorModel {
 		return true
 	}
 
-	fun addEdge(weight: String?, vertex1: Any?, vertex2: Any?): Boolean {
+	fun addEdge(weight: String?, vertexFirst: Any?, vertexSecond: Any?): Boolean {
 		try {
-			val w = weight!!.toDouble()
-			if (w < 0) return false
+			val checkingWeight = weight!!.toDouble()
+			if (checkingWeight < 0) return false
 			graph.model.beginUpdate()
-			graph.insertEdge(parent, null, weight, vertex1, vertex2, Constants.EDGE_NORMAL_STYLE)
+			graph.insertEdge(parent, null, weight, vertexFirst, vertexSecond, Constants.EDGE_NORMAL_STYLE)
 			graph.model.endUpdate()
-		} catch (e: NumberFormatException) {
+		} catch (error: NumberFormatException) {
 			return false
 		}
 		return true
@@ -83,16 +83,16 @@ class GraphCreatorModel {
 	}
 
 	fun setStyleSelected(flag: Boolean, cells: MutableList<mxCell>?) {
-		for (c in cells!!) {
+		for (cellsElements in cells!!) {
 			if (flag) {
-				if (c.isVertex) {
-					graph.setCellStyle(Constants.VERTEX_SELECTED_STYLE, arrayOf<Any>(c))
-				} else if (c.isEdge) graph.setCellStyle(Constants.EDGE_SELECTED_STYLE, arrayOf<Any>(c))
+				if (cellsElements.isVertex) {
+					graph.setCellStyle(Constants.VERTEX_SELECTED_STYLE, arrayOf<Any>(cellsElements))
+				} else if (cellsElements.isEdge) graph.setCellStyle(Constants.EDGE_SELECTED_STYLE, arrayOf<Any>(cellsElements))
 			} else {
-				if (c.isVertex) graph.setCellStyle(
+				if (cellsElements.isVertex) graph.setCellStyle(
 					Constants.VERTEX_NORMAL_STYLE,
-					arrayOf<Any>(c)
-				) else if (c.isEdge) graph.setCellStyle(Constants.EDGE_NORMAL_STYLE, arrayOf<Any>(c))
+					arrayOf<Any>(cellsElements)
+				) else if (cellsElements.isEdge) graph.setCellStyle(Constants.EDGE_NORMAL_STYLE, arrayOf<Any>(cellsElements))
 			}
 		}
 	}

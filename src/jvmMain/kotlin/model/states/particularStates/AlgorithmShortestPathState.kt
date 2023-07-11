@@ -1,19 +1,18 @@
-package model.states.states
+package model.states.particularStates
 
 import Constants
-import UI.GraphCreatorView
 import com.mxgraph.model.mxCell
 import model.adapter.Adapter
-import model.algorithm.ShortestWayView
-import model.states.GraphCreatorModel
+import model.algorithm.ShortestPathView
+import model.states.CreationAreaModel
+import ui.AppView
 
-class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView, adapter: Adapter) : IState {
-	private val model: GraphCreatorModel
-	private val view: GraphCreatorView
+class AlgorithmShortestPathState(model: CreationAreaModel, view: AppView, adapter: Adapter) : IState {
+	private val model: CreationAreaModel
+	private val view: AppView
 	private val adapter: Adapter
-	private var stepsView: List<ShortestWayView?>? = null
-	private var curStatus: Status =
-		Status.NORMAL
+	private var stepsView: List<ShortestPathView?>? = null
+	private var curStatus: Status = Status.NORMAL
 	private var sourceVertex: mxCell? = null
 	private var indexStep = -1
 
@@ -35,10 +34,10 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 	private fun handlerSelectOneVer(target: mxCell) {
 		curStatus = Status.PROCESSING
 		model.setStyleSelected(true, mutableListOf(target))
-		view.setLog("_____________________________________________________________________________")
+		view.setLog("____________________________________________________________________________")
 		view.setLog("Поиск кратчайшего пути из вершины " + sourceVertex!!.value + " в вершину " + target.value)
 		view.setLog("_____________________________________________________________________________")
-		adapter.shortestWay(
+		adapter.shortestPath(
 			"Алгоритм Дейкстры", model.graph, sourceVertex, target
 		) { mementosView ->
 			stepsView = mementosView
@@ -59,7 +58,7 @@ class AlgorithmShortestWayState(model: GraphCreatorModel, view: GraphCreatorView
 	}
 
 	// Показать шаг алгоритма
-	private fun showMemento(viewMemento: ShortestWayView) {
+	private fun showMemento(viewMemento: ShortestPathView) {
 		model.setNormalStyle()
 		val currentVertex = viewMemento.getCurrentVertex()
 		val processedVertices = viewMemento.getProcessedVertices()

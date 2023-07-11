@@ -1,8 +1,8 @@
-package UI
+package ui
 
 import java.io.File
 
-interface GraphCreatorView {
+interface AppView {
 	fun setEnabledStartButton(show: Boolean)
 	fun setEnabledFinishButton(show: Boolean)
 	fun setEnabledNextButton(show: Boolean)

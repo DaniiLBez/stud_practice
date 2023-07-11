@@ -1,11 +1,11 @@
 package algorithm.graph
 
 import algorithm.dijkstra.Dijkstra
-import algorithm.dijkstra.ShortestWay
+import algorithm.dijkstra.ShortestPath
 import java.util.*
 
-class WeightedDigraph(stream: String, separator: String) {
-	private var graph: Digraph? = null
+class WeightedGraphModel(stream: String, separator: String) {
+	private var graph: GraphModel? = null
 	private var vertexNameOfNumber = hashMapOf<String, Int>()
 
 	init {
@@ -31,7 +31,7 @@ class WeightedDigraph(stream: String, separator: String) {
 	}
 
 	private fun buildGraphFromStringRepresentation(graphStringRepresentation: List<List<String>>, graphSize: Int) {
-		graph = Digraph(graphSize)
+		graph = GraphModel(graphSize)
 		for (graphLine in graphStringRepresentation) {
 			val sourceVertexName = graphLine[0]
 			if (graphLine.size > 2) {
@@ -64,7 +64,7 @@ class WeightedDigraph(stream: String, separator: String) {
 			.get()
 	}
 
-	fun shortestWay(source: String, target: String, algorithm: Dijkstra): List<ShortestWay> {
-		return algorithm.buildWay(graph!!, index(source), index(target)) ?: listOf()
+	fun shortestPath(source: String, target: String, algorithm: Dijkstra): List<ShortestPath> {
+		return algorithm.buildWay(graph!!, index(source))
 	}
 }

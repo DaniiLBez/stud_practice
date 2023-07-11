@@ -1,7 +1,7 @@
-package UI
+package ui
 
 import Constants
-import controller.GraphCreatorController
+import controller.CreationAreaController
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.event.ActionEvent
@@ -11,8 +11,8 @@ import javax.swing.ImageIcon
 import javax.swing.JButton
 import javax.swing.JPanel
 
-class BottomAppBar(controller: GraphCreatorController) : JPanel() {
-	private val controller: GraphCreatorController
+class BottomAppBar(controller: CreationAreaController) : JPanel() {
+	private val controller: CreationAreaController
 	private var backStepButton: JButton? = null
 	private var nextStepButton: JButton? = null
 	private var startButton: JButton? = null
@@ -38,23 +38,23 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 		val buttonList: MutableList<JButton> = ArrayList()
 		backStepButton = createButton(
 			Constants.BACK,
-			{ e: ActionEvent? -> controller.backStep() }, buttonList, false
+			{ event: ActionEvent? -> controller.backStep() }, buttonList, false
 		)
 		startButton = createButton(
 			Constants.START,
-			{ e: ActionEvent? -> controller.startAlgorithm() }, buttonList, false
+			{ event: ActionEvent? -> controller.startAlgorithm() }, buttonList, false
 		)
 		finishButton = createButton(
 			Constants.FINISH,
-			{ e: ActionEvent? -> controller.finishAlgorithm() }, buttonList, false
+			{ event: ActionEvent? -> controller.finishAlgorithm() }, buttonList, false
 		)
 		nextStepButton = createButton(
 			Constants.NEXT,
-			{ e: ActionEvent? -> controller.nextStep() }, buttonList, false
+			{ event: ActionEvent? -> controller.nextStep() }, buttonList, false
 		)
 		resetButton = createButton(
 			Constants.RESET,
-			{ e: ActionEvent? -> controller.resetAlgorithm() }, buttonList, false
+			{ event: ActionEvent? -> controller.resetAlgorithm() }, buttonList, false
 		)
 
 		buttonList.forEach(
@@ -73,8 +73,8 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 		val buttonList: MutableList<JButton> = ArrayList()
 
 		ranAlgorithm = createRanButton(
-			"Алгоритм Дейкстры",
-			{ e: ActionEvent? -> controller.setStateOfAlgorithm() }, buttonList, true
+			{ e: ActionEvent? -> controller.setStateOfAlgorithm() },
+			buttonList, true
 		)
 
 		buttonList.forEach(
@@ -105,7 +105,6 @@ class BottomAppBar(controller: GraphCreatorController) : JPanel() {
 	}
 
 	private fun createRanButton(
-		name: String,
 		listener: ActionListener,
 		container: MutableList<JButton>,
 		enabled: Boolean

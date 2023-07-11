@@ -1,7 +1,7 @@
-package UI
+package ui
 
 import Constants
-import controller.GraphCreatorController
+import controller.CreationAreaController
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Font
@@ -11,25 +11,16 @@ import java.awt.event.ActionListener
 import java.util.function.Consumer
 import javax.swing.BorderFactory
 import javax.swing.JButton
-import javax.swing.JComboBox
 import javax.swing.JLabel
 import javax.swing.JPanel
 
-class TopAppBar(controller: GraphCreatorController) : JPanel() {
-	private val controller: GraphCreatorController
-	private var boxSaveLoad: JComboBox<*>? = null
-	var labelHelp: JLabel? = null
-		private set
-	var moveButton: JButton? = null
-		private set
-	var addVertexButton: JButton? = null
-		private set
-	var connectVertexButton: JButton? = null
-		private set
-	var deleteButton: JButton? = null
-		private set
-
-	var dijkstraButton: JButton? = null
+class TopAppBar(controller: CreationAreaController) : JPanel() {
+	private val controller: CreationAreaController
+	private var labelHelp: JLabel? = null
+	private var moveButton: JButton? = null
+	private var addVertexButton: JButton? = null
+	private var connectVertexButton: JButton? = null
+	private var deleteButton: JButton? = null
 
 	init {
 		this.controller = controller
@@ -50,15 +41,15 @@ class TopAppBar(controller: GraphCreatorController) : JPanel() {
 
 		createButton(
 			Constants.SAVE,
-			{ e: ActionEvent? -> controller.saveGraph() }, buttonList, true
+			{ event: ActionEvent? -> controller.saveGraph() }, buttonList, true
 		)
 		createButton(
 			Constants.LOAD,
-			{ e: ActionEvent? -> controller.loadGraph() }, buttonList, true
+			{ event: ActionEvent? -> controller.loadGraph() }, buttonList, true
 		)
 		moveButton = createButton(
 			Constants.MOVE,
-			{ e: ActionEvent? -> controller.setStateOfMotion() }, buttonList, true
+			{ event: ActionEvent? -> controller.setStateOfMotion() }, buttonList, true
 		)
 		addVertexButton = createButton(
 			Constants.ADD_VERTEX,
@@ -66,11 +57,11 @@ class TopAppBar(controller: GraphCreatorController) : JPanel() {
 		)
 		connectVertexButton = createButton(
 			Constants.CONNECT_VERTEX,
-			{ e: ActionEvent? -> controller.setStateOfConnectionVerticies() }, buttonList, true
+			{ event: ActionEvent? -> controller.setStateOfAddEdge() }, buttonList, true
 		)
 		deleteButton = createButton(
 			Constants.DELETE,
-			{ e: ActionEvent? -> controller.setStateOfDelete() }, buttonList, true
+			{ event: ActionEvent? -> controller.setStateOfDelete() }, buttonList, true
 		)
 
 		buttonList.forEach(
@@ -114,10 +105,5 @@ class TopAppBar(controller: GraphCreatorController) : JPanel() {
 
 	fun setLabelHelp(text: String?) {
 		labelHelp!!.text = text
-	}
-
-	companion object {
-		private val SaveLoad = arrayOf<String?>("Меню", "Загрузить граф", "Сохранить Граф")
-		private val AddVertexEdges = arrayOf<String?>("Добавить", "Добавить вершину", "Добавить ребро")
 	}
 }
