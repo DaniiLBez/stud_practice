@@ -1,7 +1,7 @@
-import ui.AppViewRealization
 import controller.CreationAreaController
 import model.adapter.Adapter
 import model.states.CreationAreaModel
+import ui.AppViewRealization
 
 fun main() {
 	val creationAreaModel = CreationAreaModel()

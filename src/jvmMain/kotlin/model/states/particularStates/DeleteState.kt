@@ -1,6 +1,5 @@
 package model.states.particularStates
 
-import com.mxgraph.view.mxGraph
 import model.states.CreationAreaModel
 // Описывает состояние удаление ребер и вершин
 class DeleteState(model: CreationAreaModel) : IState {

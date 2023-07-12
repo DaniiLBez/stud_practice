@@ -105,4 +105,6 @@ class AppViewRealization(controller: CreationAreaController, model: CreationArea
 		val ret = fileOpen.showDialog(null, title)
 		return if (ret == JFileChooser.APPROVE_OPTION) fileOpen.selectedFile else null
 	}
+
+	fun getTopBar() = topBar
 }

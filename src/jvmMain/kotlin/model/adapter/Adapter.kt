@@ -95,7 +95,13 @@ class Adapter {
 		return mementosView
 	}
 
-	fun shortestPath(currentAlgorithm: String?, graph: Any?, s: Any?, t: Any?, callbackEnd: Consumer<List<ShortestPathView>>) {
+	fun shortestPath(
+		currentAlgorithm: String?,
+		graph: Any?,
+		s: Any?,
+		t: Any?,
+		callbackEnd: Consumer<List<ShortestPathView>>
+	) {
 		Thread {
 			val digraph = WeightedGraphModel(convertFromMxGraphToGraph(graph as mxGraph), Constants.SEPARATOR)
 			var mementosView = mutableListOf<ShortestPathView>()

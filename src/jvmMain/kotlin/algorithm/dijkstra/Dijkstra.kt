@@ -1,7 +1,7 @@
 package algorithm.dijkstra
 
-import algorithm.graph.GraphModel
 import algorithm.graph.DirectedEdge
+import algorithm.graph.GraphModel
 import algorithm.graph.Vertexes
 import algorithm.graph.WeightedGraphModel
 import java.util.*

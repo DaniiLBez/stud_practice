@@ -18,6 +18,8 @@ class TopAppBar(controller: CreationAreaController) : JPanel() {
 	private val controller: CreationAreaController
 	private var labelHelp: JLabel? = null
 	private var moveButton: JButton? = null
+	fun getMoveButton() = moveButton
+
 	private var addVertexButton: JButton? = null
 	private var connectVertexButton: JButton? = null
 	private var deleteButton: JButton? = null
@@ -106,4 +108,9 @@ class TopAppBar(controller: CreationAreaController) : JPanel() {
 	fun setLabelHelp(text: String?) {
 		labelHelp!!.text = text
 	}
+
+	fun getLabelHelp() = labelHelp
+	fun getDeleteButton() = deleteButton
+	fun getAddVertexButton() = addVertexButton
+	fun getConnectVertexButton() = connectVertexButton
 }
