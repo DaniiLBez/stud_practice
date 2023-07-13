@@ -13,13 +13,23 @@ version = "1.0-SNAPSHOT"
 repositories {
     google()
     mavenCentral()
-    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 kotlin {
     jvm {
         jvmToolchain(11)
         withJava()
+    }
+    sourceSets {
+        val jvmMain by getting {
+            dependencies {
+                implementation("org.tinyjee.jgraphx:jgraphx:3.4.1.3")
+            }
+        }
+        val jvmTest by getting
+    }
+    dependencies{
+        commonTestImplementation(kotlin("test"))
     }
 }
 
@@ -42,6 +52,6 @@ tasks.withType<Detekt>().configureEach {
     }
 }
 
-dependencies{
+dependencies {
     add("implementation", "org.webjars.npm:mxgraph:4.2.2")
 }
